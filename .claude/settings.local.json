@@ -1,0 +1,14 @@
+{
+  "permissions": {
+    "allow": [
+      "Skill(chrome-devtools)",
+      "Bash(node evaluate.js:*)",
+      "Bash(npm install:*)",
+      "Bash(npm run dev:*)",
+      "Bash(node screenshot.js:*)",
+      "Skill(frontend-design)",
+      "Bash(node:*)",
+      "Bash(taskkill /F /PID 6156)"
+    ]
+  }
+}
