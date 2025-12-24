@@ -1,12 +1,14 @@
 import type { Metadata } from "next";
-import { Suspense } from "react";
 import { Be_Vietnam_Pro } from "next/font/google";
 import { CartProvider } from "@/contexts/cart-context";
 import { CompareProvider } from "@/contexts/compare-context";
+import { SplashProvider } from "@/contexts/splash-context";
 import Header from "@/components/header";
 import Footer from "@/components/footer";
 import CompareFloatingBar from "@/components/compare-floating-bar";
+import FloatingActionButton from "@/components/floating-action-button";
 import SplashScreenWrapper from "@/components/splash-screen-wrapper";
+import PageContent from "@/components/page-content";
 import ScrollToTop from "@/components/scroll-to-top";
 import "./globals.css";
 import "swiper/css";
@@ -21,9 +23,9 @@ const beVietnamPro = Be_Vietnam_Pro({
 });
 
 export const metadata: Metadata = {
-  title: "CoolMart - Máy Lạnh Chính Hãng Giá Tốt Nhất",
+  title: "Hùng Thanh - Máy Lạnh Chính Hãng Giá Tốt Nhất",
   description:
-    "CoolMart - Chuyên bán máy lạnh Inverter chính hãng Daikin, Panasonic, LG, Samsung, Toshiba. Giá tốt nhất, trả góp 0%, bảo hành uy tín, lắp đặt tận nơi.",
+    "Hùng Thanh - Chuyên bán máy lạnh Inverter chính hãng Daikin, Panasonic, LG, Samsung, Toshiba. Giá tốt nhất, trả góp 0%, bảo hành uy tín, lắp đặt tận nơi.",
   keywords: [
     "máy lạnh",
     "điều hòa",
@@ -32,10 +34,14 @@ export const metadata: Metadata = {
     "máy lạnh daikin",
     "máy lạnh panasonic",
     "máy lạnh lg",
-    "coolmart",
+    "hùng thanh",
   ],
+  icons: {
+    icon: "/images/logos/logo.png",
+    apple: "/images/logos/logo.png",
+  },
   openGraph: {
-    title: "CoolMart - Máy Lạnh Chính Hãng Giá Tốt Nhất",
+    title: "Hùng Thanh - Máy Lạnh Chính Hãng Giá Tốt Nhất",
     description:
       "Chuyên bán máy lạnh Inverter chính hãng. Giá tốt nhất, trả góp 0%.",
     type: "website",
@@ -50,18 +56,21 @@ export default function RootLayout({
   return (
     <html lang="vi" className={beVietnamPro.variable}>
       <body className="font-sans antialiased bg-[#f2f4f7]">
-        <CartProvider>
-          <CompareProvider>
-            <ScrollToTop />
-            <SplashScreenWrapper />
-            <Header />
-            {/* <Suspense> */}
-            <main>{children}</main>
-            {/* </Suspense> */}
-            <Footer />
-            <CompareFloatingBar />
-          </CompareProvider>
-        </CartProvider>
+        <SplashProvider>
+          <CartProvider>
+            <CompareProvider>
+              <SplashScreenWrapper />
+              <PageContent>
+                <ScrollToTop />
+                <Header />
+                <main>{children}</main>
+                <Footer />
+                <CompareFloatingBar />
+                <FloatingActionButton />
+              </PageContent>
+            </CompareProvider>
+          </CartProvider>
+        </SplashProvider>
       </body>
     </html>
   );

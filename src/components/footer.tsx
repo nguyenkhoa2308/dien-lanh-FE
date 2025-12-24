@@ -23,7 +23,7 @@ export default function Footer() {
               </div>
               <div>
                 <div className="text-lg font-bold text-white">
-                  Cool<span className="text-[#90caf9]">Mart</span>
+                  Hùng <span className="text-[#90caf9]">Thanh</span>
                 </div>
                 <div className="text-[10px] text-gray-400 uppercase tracking-wider">
                   Mát lạnh tận nhà
@@ -182,7 +182,7 @@ export default function Footer() {
                   />
                 </svg>
                 <span className="text-gray-400">
-                  123 Đường ABC, Quận 1, TP.HCM
+                  Nam Từ Liêm, Hà Nội
                 </span>
               </li>
               <li className="flex items-center gap-2">
@@ -200,10 +200,10 @@ export default function Footer() {
                   />
                 </svg>
                 <a
-                  href="tel:1900xxxx"
+                  href="tel:+84779886666"
                   className="text-white font-semibold hover:text-[#90caf9]"
                 >
-                  1900.xxxx
+                  0779 886 666
                 </a>
               </li>
               <li className="flex items-center gap-2">
@@ -221,10 +221,10 @@ export default function Footer() {
                   />
                 </svg>
                 <a
-                  href="mailto:contact@coolmart.vn"
+                  href="mailto:hungle@hagency.vn"
                   className="text-gray-400 hover:text-white"
                 >
-                  contact@coolmart.vn
+                  hungle@hagency.vn
                 </a>
               </li>
               <li className="flex items-center gap-2">
@@ -271,7 +271,7 @@ export default function Footer() {
       <div className="border-t border-gray-700">
         <div className="max-w-7xl mx-auto px-4 py-4">
           <div className="flex flex-col sm:flex-row justify-between items-center gap-2 text-xs text-gray-500">
-            <p>&copy; 2025 CoolMart. Tất cả quyền được bảo lưu.</p>
+            <p>&copy; 2025 Hùng Thanh. Tất cả quyền được bảo lưu.</p>
             <div className="flex items-center gap-3">
               <Link href="#" className="hover:text-white">
                 Điều khoản

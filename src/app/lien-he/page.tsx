@@ -26,7 +26,7 @@ const contactInfo = [
       </svg>
     ),
     title: "Địa chỉ",
-    content: "123 Đường ABC, Phường XYZ, Quận 1, TP. Hồ Chí Minh",
+    content: "Nam Từ Liêm, Hà Nội",
     link: "https://maps.google.com",
     linkText: "Xem bản đồ",
   },
@@ -48,9 +48,9 @@ const contactInfo = [
       </svg>
     ),
     title: "Hotline",
-    content: "1900.xxxx",
+    content: "0779 886 666",
     subContent: "8:00 - 21:00 (Thứ 2 - Chủ nhật)",
-    link: "tel:1900xxxx",
+    link: "tel:+84779886666",
     linkText: "Gọi ngay",
   },
   {
@@ -71,9 +71,9 @@ const contactInfo = [
       </svg>
     ),
     title: "Email",
-    content: "contact@coolmart.vn",
+    content: "hungle@hagency.vn",
     subContent: "Phản hồi trong 24h",
-    link: "mailto:contact@coolmart.vn",
+    link: "mailto:hungle@hagency.vn",
     linkText: "Gửi email",
   },
   {
@@ -94,32 +94,17 @@ const contactInfo = [
       </svg>
     ),
     title: "Zalo",
-    content: "0909.xxx.xxx",
-    link: "https://zalo.me/0909xxxxxx",
+    content: "0779 886 666",
+    link: "https://zalo.me/0779886666",
     linkText: "Chat Zalo",
   },
 ];
 
 const branches = [
   {
-    city: "TP. Hồ Chí Minh",
-    address: "123 Đường ABC, Q.1",
-    phone: "028.xxxx.xxxx",
-  },
-  {
     city: "Hà Nội",
-    address: "456 Đường DEF, Q. Cầu Giấy",
-    phone: "024.xxxx.xxxx",
-  },
-  {
-    city: "Đà Nẵng",
-    address: "789 Đường GHI, Q. Hải Châu",
-    phone: "0236.xxx.xxx",
-  },
-  {
-    city: "Cần Thơ",
-    address: "321 Đường JKL, Q. Ninh Kiều",
-    phone: "0292.xxx.xxx",
+    address: "Nam Từ Liêm, Hà Nội",
+    phone: "0779.886.666",
   },
 ];
 
@@ -160,7 +145,7 @@ export default function ContactPage() {
             Liên hệ với chúng tôi
           </h1>
           <p className="text-lg text-white/80 max-w-2xl mx-auto">
-            Đội ngũ CoolMart luôn sẵn sàng hỗ trợ và giải đáp mọi thắc mắc của
+            Đội ngũ Hùng Thanh luôn sẵn sàng hỗ trợ và giải đáp mọi thắc mắc của
             bạn
           </p>
         </div>

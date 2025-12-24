@@ -1,8 +1,8 @@
 import Link from 'next/link';
 
 export const metadata = {
-  title: 'Bảo hành & Bảo dưỡng - CoolMart',
-  description: 'Chính sách bảo hành và dịch vụ bảo dưỡng máy lạnh tại CoolMart',
+  title: 'Bảo hành & Bảo dưỡng - Hùng Thanh',
+  description: 'Chính sách bảo hành và dịch vụ bảo dưỡng máy lạnh tại Hùng Thanh',
 };
 
 const warrantyPolicies = [
@@ -117,8 +117,8 @@ const faqs = [
     answer: 'Với các lỗi thông thường, kỹ thuật viên sẽ khắc phục trong ngày. Trường hợp cần thay thế linh kiện đặc biệt, thời gian có thể từ 2-5 ngày tùy tình trạng.',
   },
   {
-    question: 'CoolMart có hỗ trợ bảo hành tại nhà không?',
-    answer: 'Có, CoolMart cung cấp dịch vụ bảo hành tại nhà hoàn toàn miễn phí trong thời gian bảo hành. Khách hàng chỉ cần đặt lịch hẹn qua hotline 1900.xxxx.',
+    question: 'Hùng Thanh có hỗ trợ bảo hành tại nhà không?',
+    answer: 'Có, Hùng Thanh cung cấp dịch vụ bảo hành tại nhà hoàn toàn miễn phí trong thời gian bảo hành. Khách hàng chỉ cần đặt lịch hẹn qua hotline 0779 886 666.',
   },
   {
     question: 'Chi phí di chuyển có tính riêng không?',
@@ -197,7 +197,7 @@ export default function WarrantyPage() {
                 Lưu ý quan trọng
               </h4>
               <ul className="space-y-2 text-sm text-[var(--gray-700)]">
-                <li>• Bảo hành chỉ áp dụng khi sản phẩm được lắp đặt bởi kỹ thuật viên CoolMart hoặc đại lý ủy quyền</li>
+                <li>• Bảo hành chỉ áp dụng khi sản phẩm được lắp đặt bởi kỹ thuật viên Hùng Thanh hoặc đại lý ủy quyền</li>
                 <li>• Không áp dụng bảo hành cho các trường hợp hư hỏng do thiên tai, sử dụng sai cách, hoặc tự ý sửa chữa</li>
                 <li>• Vui lòng giữ hóa đơn mua hàng và phiếu bảo hành trong suốt thời gian bảo hành</li>
               </ul>
@@ -333,11 +333,11 @@ export default function WarrantyPage() {
               Liên hệ ngay để được hỗ trợ nhanh chóng từ đội ngũ kỹ thuật viên chuyên nghiệp
             </p>
             <div className="flex flex-wrap justify-center gap-4">
-              <a href="tel:1900xxxx" className="btn bg-white text-[var(--primary)] hover:bg-gray-100">
+              <a href="tel:+84779886666" className="btn bg-white text-[var(--primary)] hover:bg-gray-100">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-5 h-5">
                   <path fillRule="evenodd" d="M2 3.5A1.5 1.5 0 0 1 3.5 2h1.148a1.5 1.5 0 0 1 1.465 1.175l.716 3.223a1.5 1.5 0 0 1-1.052 1.767l-.933.267c-.41.117-.643.555-.48.95a11.542 11.542 0 0 0 6.254 6.254c.395.163.833-.07.95-.48l.267-.933a1.5 1.5 0 0 1 1.767-1.052l3.223.716A1.5 1.5 0 0 1 18 15.352V16.5a1.5 1.5 0 0 1-1.5 1.5H15c-1.149 0-2.263-.15-3.326-.43A13.022 13.022 0 0 1 2.43 8.326 13.019 13.019 0 0 1 2 5V3.5Z" clipRule="evenodd" />
                 </svg>
-                Gọi ngay 1900.xxxx
+                Gọi ngay 0779 886 666
               </a>
               <Link href="/lien-he" className="btn btn-secondary border-white text-white hover:bg-white hover:text-[var(--primary)]">
                 Đặt lịch online

@@ -78,7 +78,12 @@ export async function getProducts(page: number = 1, limit: number = 10): Promise
     return await response.json();
   } catch (error) {
     console.error('Error fetching products:', error);
-    throw error;
+    // Return empty data during build or when API is unavailable
+    return {
+      success: false,
+      data: [],
+      meta: { page: 1, limit, total: 0, totalPages: 0 },
+    };
   }
 }
 
@@ -99,14 +104,15 @@ export async function getFeaturedProducts(limit: number = 8): Promise<Product[]>
     return data.data.filter(p => p.isFeatured);
   } catch (error) {
     console.error('Error fetching featured products:', error);
-    throw error;
+    // Return empty array during build or when API is unavailable
+    return [];
   }
 }
 
 /**
  * Fetch a single product by slug
  */
-export async function getProductBySlug(slug: string): Promise<Product> {
+export async function getProductBySlug(slug: string): Promise<Product | null> {
   try {
     const response = await fetch(`${API_BASE_URL}/products/slug/${slug}`, {
       cache: 'no-store',
@@ -120,7 +126,8 @@ export async function getProductBySlug(slug: string): Promise<Product> {
     return data.data;
   } catch (error) {
     console.error('Error fetching product:', error);
-    throw error;
+    // Return null when API is unavailable
+    return null;
   }
 }
 
@@ -147,4 +154,25 @@ export function formatPrice(price: string | number): string {
     style: 'currency',
     currency: 'VND',
   }).format(priceNum);
+}
+
+/**
+ * Search products by query
+ */
+export async function searchProducts(query: string, limit: number = 10): Promise<Product[]> {
+  try {
+    const response = await fetch(`${API_BASE_URL}/products?search=${encodeURIComponent(query)}&limit=${limit}`, {
+      cache: 'no-store',
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    const data: ProductsResponse = await response.json();
+    return data.data;
+  } catch (error) {
+    console.error('Error searching products:', error);
+    return [];
+  }
 }

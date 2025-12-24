@@ -1,11 +1,6 @@
 "use client";
 
-import dynamic from "next/dynamic";
-
-// Dynamic import to prevent hydration mismatch
-const SplashScreen = dynamic(() => import("@/components/splash-screen"), {
-  ssr: false,
-});
+import SplashScreen from "@/components/splash-screen";
 
 export default function SplashScreenWrapper() {
   return <SplashScreen />;

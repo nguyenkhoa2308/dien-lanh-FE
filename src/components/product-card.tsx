@@ -23,6 +23,7 @@ export default function ProductCard({ product }: ProductCardProps) {
     isHydrated,
   } = useCompare();
   const [showNotification, setShowNotification] = useState(false);
+  const [isImageLoaded, setIsImageLoaded] = useState(false);
 
   const defaultVariant =
     product.variants.find((v) => v.isDefault) || product.variants[0];
@@ -110,14 +111,23 @@ export default function ProductCard({ product }: ProductCardProps) {
           )}
         </div>
 
-        {/* Product image */}
+        {/* Product image with loading placeholder */}
+        <div className="absolute inset-0 flex items-center justify-center bg-white">
+          {/* Skeleton placeholder - shown until image loads */}
+          {!isImageLoaded && (
+            <div className="w-16 h-16 bg-gray-200 rounded animate-pulse" />
+          )}
+        </div>
         {primaryImage && (
           <Image
             src={primaryImage.url}
             alt={primaryImage.altText || product.name}
             fill
-            className="object-contain p-2"
+            className={`object-contain p-2 transition-opacity duration-300 ${
+              isImageLoaded ? "opacity-100" : "opacity-0"
+            }`}
             sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
+            onLoad={() => setIsImageLoaded(true)}
           />
         )}
       </Link>

@@ -8,7 +8,7 @@ export default function ProductCardSkeleton() {
   return (
     <div className="relative bg-white rounded-lg border border-gray-200 overflow-hidden animate-pulse">
       {/* Image skeleton */}
-      <div className="relative aspect-square p-4 bg-gray-100">
+      <div className="relative aspect-square p-4 bg-white">
         <div className="absolute top-2 left-2 z-10 flex flex-col gap-1">
           <div className="h-5 w-12 bg-gray-200 rounded" />
         </div>
