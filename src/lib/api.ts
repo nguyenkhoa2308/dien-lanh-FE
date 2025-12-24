@@ -1,4 +1,4 @@
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001/api';
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL;
 
 export interface Product {
   id: string;
@@ -65,11 +65,17 @@ export interface ProductDetailResponse {
 /**
  * Fetch all products with pagination
  */
-export async function getProducts(page: number = 1, limit: number = 10): Promise<ProductsResponse> {
+export async function getProducts(
+  page: number = 1,
+  limit: number = 10
+): Promise<ProductsResponse> {
   try {
-    const response = await fetch(`${API_BASE_URL}/products?page=${page}&limit=${limit}`, {
-      next: { revalidate: 60 }, // Cache for 60 seconds
-    });
+    const response = await fetch(
+      `${API_BASE_URL}/products?page=${page}&limit=${limit}`,
+      {
+        next: { revalidate: 60 }, // Cache for 60 seconds
+      }
+    );
 
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
@@ -77,7 +83,7 @@ export async function getProducts(page: number = 1, limit: number = 10): Promise
 
     return await response.json();
   } catch (error) {
-    console.error('Error fetching products:', error);
+    console.error("Error fetching products:", error);
     // Return empty data during build or when API is unavailable
     return {
       success: false,
@@ -90,7 +96,9 @@ export async function getProducts(page: number = 1, limit: number = 10): Promise
 /**
  * Fetch featured products for home page
  */
-export async function getFeaturedProducts(limit: number = 8): Promise<Product[]> {
+export async function getFeaturedProducts(
+  limit: number = 8
+): Promise<Product[]> {
   try {
     const response = await fetch(`${API_BASE_URL}/products?limit=${limit}`, {
       next: { revalidate: 60 }, // Cache for 60 seconds
@@ -101,9 +109,9 @@ export async function getFeaturedProducts(limit: number = 8): Promise<Product[]>
     }
 
     const data: ProductsResponse = await response.json();
-    return data.data.filter(p => p.isFeatured);
+    return data.data.filter((p) => p.isFeatured);
   } catch (error) {
-    console.error('Error fetching featured products:', error);
+    console.error("Error fetching featured products:", error);
     // Return empty array during build or when API is unavailable
     return [];
   }
@@ -115,7 +123,7 @@ export async function getFeaturedProducts(limit: number = 8): Promise<Product[]>
 export async function getProductBySlug(slug: string): Promise<Product | null> {
   try {
     const response = await fetch(`${API_BASE_URL}/products/slug/${slug}`, {
-      cache: 'no-store',
+      cache: "no-store",
     });
 
     if (!response.ok) {
@@ -125,7 +133,7 @@ export async function getProductBySlug(slug: string): Promise<Product | null> {
     const data: ProductDetailResponse = await response.json();
     return data.data;
   } catch (error) {
-    console.error('Error fetching product:', error);
+    console.error("Error fetching product:", error);
     // Return null when API is unavailable
     return null;
   }
@@ -134,7 +142,10 @@ export async function getProductBySlug(slug: string): Promise<Product | null> {
 /**
  * Calculate discount percentage
  */
-export function calculateDiscount(price: string, compareAtPrice: string | null): number {
+export function calculateDiscount(
+  price: string,
+  compareAtPrice: string | null
+): number {
   if (!compareAtPrice) return 0;
 
   const priceNum = parseFloat(price);
@@ -149,21 +160,29 @@ export function calculateDiscount(price: string, compareAtPrice: string | null):
  * Format price to VND currency
  */
 export function formatPrice(price: string | number): string {
-  const priceNum = typeof price === 'string' ? parseFloat(price) : price;
-  return new Intl.NumberFormat('vi-VN', {
-    style: 'currency',
-    currency: 'VND',
+  const priceNum = typeof price === "string" ? parseFloat(price) : price;
+  return new Intl.NumberFormat("vi-VN", {
+    style: "currency",
+    currency: "VND",
   }).format(priceNum);
 }
 
 /**
  * Search products by query
  */
-export async function searchProducts(query: string, limit: number = 10): Promise<Product[]> {
+export async function searchProducts(
+  query: string,
+  limit: number = 10
+): Promise<Product[]> {
   try {
-    const response = await fetch(`${API_BASE_URL}/products?search=${encodeURIComponent(query)}&limit=${limit}`, {
-      cache: 'no-store',
-    });
+    const response = await fetch(
+      `${API_BASE_URL}/products?search=${encodeURIComponent(
+        query
+      )}&limit=${limit}`,
+      {
+        cache: "no-store",
+      }
+    );
 
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
@@ -172,7 +191,7 @@ export async function searchProducts(query: string, limit: number = 10): Promise
     const data: ProductsResponse = await response.json();
     return data.data;
   } catch (error) {
-    console.error('Error searching products:', error);
+    console.error("Error searching products:", error);
     return [];
   }
 }

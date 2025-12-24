@@ -1,9 +1,15 @@
 "use client";
 
-import { createContext, useContext, useState, useEffect, ReactNode } from "react";
+import {
+  createContext,
+  useContext,
+  useState,
+  useEffect,
+  ReactNode,
+} from "react";
 
-const SPLASH_DURATION = 800; // 0.8 seconds
-const FADE_DURATION = 200; // 0.2 seconds fade out
+const SPLASH_DURATION = 1500; // 0.8 seconds
+const FADE_DURATION = 300; // 0.2 seconds fade out
 
 interface SplashContextType {
   isLoading: boolean;

@@ -176,27 +176,27 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { slug } = await params;
 
-  try {
-    const apiProduct = await getProductBySlug(slug);
-    const product = adaptAPIProduct(apiProduct);
+  const apiProduct = await getProductBySlug(slug);
 
+  if (!apiProduct) {
     return {
-      title: `${product.name} | CoolMart`,
-      description: `${product.name} công suất ${product.power} HP (${formatNumber(
-        product.powerBTU
-      )} BTU), ${getTypeLabel(product)} ${getCoolingLabel(product)}.`,
-      openGraph: {
-        title: `${product.name} | CoolMart`,
-        description: `${product.name} chính hãng, giao nhanh, bảo hành 24 tháng.`,
-      },
-    };
-  } catch (error) {
-    console.error('Error generating metadata:', error);
-    return {
-      title: 'Sản phẩm không tồn tại | CoolMart',
+      title: 'Sản phẩm không tồn tại | Hùng Thanh',
       description: 'Sản phẩm bạn tìm kiếm không có trong hệ thống.',
     };
   }
+
+  const product = adaptAPIProduct(apiProduct);
+
+  return {
+    title: `${product.name} | Hùng Thanh`,
+    description: `${product.name} công suất ${product.power} HP (${formatNumber(
+      product.powerBTU
+    )} BTU), ${getTypeLabel(product)} ${getCoolingLabel(product)}.`,
+    openGraph: {
+      title: `${product.name} | Hùng Thanh`,
+      description: `${product.name} chính hãng, giao nhanh, bảo hành 24 tháng.`,
+    },
+  };
 }
 
 export default async function ProductDetailPage({
@@ -206,11 +206,9 @@ export default async function ProductDetailPage({
 }) {
   const { slug } = await params;
 
-  let apiProduct: APIProduct;
-  try {
-    apiProduct = await getProductBySlug(slug);
-  } catch (error) {
-    console.error('Error fetching product:', error);
+  const apiProduct = await getProductBySlug(slug);
+
+  if (!apiProduct) {
     notFound();
   }
 
