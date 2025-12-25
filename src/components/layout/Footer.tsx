@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 
 export default function Footer() {
   return (
@@ -8,18 +9,15 @@ export default function Footer() {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
           {/* Company info */}
           <div>
-            <Link href="/" className="flex items-center gap-2 mb-4">
-              <div className="w-10 h-10 bg-white rounded-xl flex items-center justify-center shadow">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 24 24"
-                  fill="currentColor"
-                  className="w-6 h-6 text-[#1976d2]"
-                >
-                  <path d="M11.644 1.59a.75.75 0 0 1 .712 0l9.75 5.25a.75.75 0 0 1 0 1.32l-9.75 5.25a.75.75 0 0 1-.712 0l-9.75-5.25a.75.75 0 0 1 0-1.32l9.75-5.25Z" />
-                  <path d="m3.265 10.602 7.668 4.129a2.25 2.25 0 0 0 2.134 0l7.668-4.13 1.37.739a.75.75 0 0 1 0 1.32l-9.75 5.25a.75.75 0 0 1-.71 0l-9.75-5.25a.75.75 0 0 1 0-1.32l1.37-.738Z" />
-                  <path d="m10.933 19.231-7.668-4.13-1.37.739a.75.75 0 0 0 0 1.32l9.75 5.25c.221.12.489.12.71 0l9.75-5.25a.75.75 0 0 0 0-1.32l-1.37-.738-7.668 4.13a2.25 2.25 0 0 1-2.134-.001Z" />
-                </svg>
+            <Link href="/" className="flex items-center gap-3 mb-4">
+              <div className="w-12 h-12 bg-white rounded-xl flex items-center justify-center shadow overflow-hidden">
+                <Image
+                  src="/images/logos/logo.png"
+                  alt="Hùng Thanh Logo"
+                  width={40}
+                  height={40}
+                  className="object-contain"
+                />
               </div>
               <div>
                 <div className="text-lg font-bold text-white">
@@ -132,26 +130,18 @@ export default function Footer() {
               </li>
               <li>
                 <Link
+                  href="/tin-tuc"
+                  className="text-gray-400 hover:text-white transition-colors"
+                >
+                  Tin tức & Kiến thức
+                </Link>
+              </li>
+              <li>
+                <Link
                   href="/lien-he"
                   className="text-gray-400 hover:text-white transition-colors"
                 >
                   Liên hệ
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="#"
-                  className="text-gray-400 hover:text-white transition-colors"
-                >
-                  Hướng dẫn mua hàng
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="#"
-                  className="text-gray-400 hover:text-white transition-colors"
-                >
-                  Chính sách đổi trả
                 </Link>
               </li>
             </ul>
@@ -270,18 +260,9 @@ export default function Footer() {
       {/* Bottom bar */}
       <div className="border-t border-gray-700">
         <div className="max-w-7xl mx-auto px-4 py-4">
-          <div className="flex flex-col sm:flex-row justify-between items-center gap-2 text-xs text-gray-500">
-            <p>&copy; 2025 Hùng Thanh. Tất cả quyền được bảo lưu.</p>
-            <div className="flex items-center gap-3">
-              <Link href="#" className="hover:text-white">
-                Điều khoản
-              </Link>
-              <span>|</span>
-              <Link href="#" className="hover:text-white">
-                Bảo mật
-              </Link>
-            </div>
-          </div>
+          <p className="text-center text-xs text-gray-500">
+            &copy; 2025 Hùng Thanh. Tất cả quyền được bảo lưu.
+          </p>
         </div>
       </div>
     </footer>

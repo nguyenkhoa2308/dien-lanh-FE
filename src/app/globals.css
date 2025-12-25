@@ -80,6 +80,8 @@ html {
   scroll-behavior: smooth;
   /* Account for sticky header when scrolling to anchors */
   scroll-padding-top: 80px;
+  /* Prevent layout shift when scrollbar appears/disappears (e.g., modal open) */
+  scrollbar-gutter: stable;
 }
 
 /* Scroll offset for anchor links (accounts for sticky header) */
@@ -114,6 +116,16 @@ body {
 
 ::-webkit-scrollbar-thumb:hover {
   background: var(--gray-500);
+}
+
+/* Hide scrollbar utility - for horizontal scrollable areas */
+.scrollbar-hide {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;  /* Chrome, Safari and Opera */
 }
 
 /* Selection */
@@ -448,6 +460,31 @@ body {
 
 .animate-slide-up {
   animation: slide-up 0.3s ease-out forwards;
+}
+
+/* Dialog animations - fast for instant feedback */
+@keyframes dialog-backdrop {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes dialog-content {
+  from {
+    opacity: 0;
+    transform: scale(0.95) translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+.animate-dialog-backdrop {
+  animation: dialog-backdrop 0.15s ease-out forwards;
+}
+
+.animate-dialog-content {
+  animation: dialog-content 0.15s ease-out forwards;
 }
 
 /* Promo Carousel Styles */

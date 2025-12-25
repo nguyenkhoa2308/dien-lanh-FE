@@ -10,8 +10,8 @@ import {
   quickFilters,
   sortOptions,
 } from "@/data/products";
-import ProductCard from "./product-card";
-import ProductCardSkeleton from "./product-card-skeleton";
+import ProductCard from "./ProductCard";
+import ProductCardSkeleton from "./ProductCardSkeleton";
 import { parsePriceRange, cn, calculateDiscount } from "@/lib/utils";
 import { Product } from "@/lib/api";
 
@@ -307,11 +307,11 @@ export default function ProductList({ initialProducts }: ProductListProps) {
           {/* Filter bar */}
           <div className="bg-white rounded-lg shadow-sm p-4 mb-4">
             {/* Filter button and quick filters */}
-            <div className="flex flex-wrap items-center gap-2 mb-3">
+            <div className="flex items-center gap-2 mb-3">
               <button
                 onClick={() => setShowFilters(!showFilters)}
                 className={cn(
-                  "inline-flex items-center gap-2 px-4 py-2 rounded-full border text-sm font-medium transition-colors",
+                  "inline-flex items-center gap-2 px-3 sm:px-4 py-2 rounded-full border text-sm font-medium transition-colors flex-shrink-0",
                   showFilters
                     ? "bg-[#1976d2] text-white border-[#1976d2]"
                     : "bg-white text-gray-700 border-gray-300 hover:border-[#1976d2]"
@@ -331,7 +331,7 @@ export default function ProductList({ initialProducts }: ProductListProps) {
                     d="M10.5 6h9.75M10.5 6a1.5 1.5 0 1 1-3 0m3 0a1.5 1.5 0 1 0-3 0M3.75 6H7.5m3 12h9.75m-9.75 0a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m-3.75 0H7.5m9-6h3.75m-3.75 0a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m-9.75 0h9.75"
                   />
                 </svg>
-                Bộ lọc
+                <span className="hidden sm:inline">Bộ lọc</span>
                 {hasActiveFilters && (
                   <span className="w-5 h-5 bg-[#d32f2f] text-white text-xs rounded-full flex items-center justify-center">
                     {filters.brand.length +
@@ -342,30 +342,36 @@ export default function ProductList({ initialProducts }: ProductListProps) {
                 )}
               </button>
 
-              {/* Quick filters */}
-              {quickFilters.map((filter) => (
-                <button
-                  key={filter.value}
-                  onClick={() => handleQuickFilter(filter.value)}
-                  className={cn(
-                    "px-3 py-1.5 rounded-full text-sm font-medium border transition-colors",
-                    isQuickFilterActive(filter.value)
-                      ? "bg-[#1976d2] text-white border-[#1976d2]"
-                      : "bg-white text-gray-600 border-gray-300 hover:border-[#1976d2] hover:text-[#1976d2]"
-                  )}
-                >
-                  {filter.label}
-                </button>
-              ))}
+              {/* Quick filters - scrollable on mobile */}
+              <div className="flex-1 overflow-x-auto scrollbar-hide">
+                <div className="flex items-center gap-2 pb-1">
+                  {quickFilters.map((filter) => (
+                    <button
+                      type="button"
+                      key={filter.value}
+                      onClick={() => handleQuickFilter(filter.value)}
+                      className={cn(
+                        "px-3 py-1.5 rounded-full text-xs sm:text-sm font-medium border transition-colors whitespace-nowrap flex-shrink-0",
+                        isQuickFilterActive(filter.value)
+                          ? "bg-[#1976d2] text-white border-[#1976d2]"
+                          : "bg-white text-gray-600 border-gray-300 hover:border-[#1976d2] hover:text-[#1976d2]"
+                      )}
+                    >
+                      {filter.label}
+                    </button>
+                  ))}
 
-              {hasActiveFilters && (
-                <button
-                  onClick={clearFilters}
-                  className="px-3 py-1.5 text-sm text-[#d32f2f] hover:underline"
-                >
-                  Xóa lọc
-                </button>
-              )}
+                  {hasActiveFilters && (
+                    <button
+                      type="button"
+                      onClick={clearFilters}
+                      className="px-3 py-1.5 text-xs sm:text-sm text-[#d32f2f] hover:underline whitespace-nowrap flex-shrink-0"
+                    >
+                      Xóa lọc
+                    </button>
+                  )}
+                </div>
+              </div>
             </div>
 
             {/* Expanded filters */}
@@ -468,16 +474,16 @@ export default function ProductList({ initialProducts }: ProductListProps) {
             )}
 
             {/* Sort */}
-            <div className="flex items-center justify-between border-t border-gray-200 pt-3 mt-3">
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between border-t border-gray-200 pt-3 mt-3 gap-2">
               <div className="flex items-center gap-2">
-                <span className="text-sm text-gray-600">Sắp xếp:</span>
-                <div className="flex gap-1">
+                <span className="text-sm text-gray-600 whitespace-nowrap">Sắp xếp:</span>
+                <div className="flex flex-wrap gap-1">
                   {sortOptions.map((option) => (
                     <button
                       key={option.value}
                       onClick={() => setSortBy(option.value)}
                       className={cn(
-                        "px-3 py-1 rounded text-sm transition-colors",
+                        "px-2 sm:px-3 py-1 rounded text-xs sm:text-sm transition-colors whitespace-nowrap",
                         sortBy === option.value
                           ? "bg-[#1976d2] text-white"
                           : "text-gray-600 hover:bg-gray-100"
@@ -494,14 +500,14 @@ export default function ProductList({ initialProducts }: ProductListProps) {
           {/* Products grid */}
           {isInitialLoading ? (
             /* Skeleton grid on initial load */
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3 md:gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-4">
               {Array.from({ length: ITEMS_PER_PAGE }).map((_, i) => (
                 <ProductCardSkeleton key={`initial-skeleton-${i}`} />
               ))}
             </div>
           ) : visibleProducts.length > 0 ? (
             <>
-              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3 md:gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-4">
                 {visibleProducts.map((product) => (
                   <ProductCard key={product.id} product={product} />
                 ))}

@@ -776,9 +776,9 @@ export default function AboutPage() {
 
           <div className="relative">
             {/* Timeline Line */}
-            <div className="hidden md:block absolute top-12 left-0 right-0 h-1.5 bg-gradient-to-r from-[var(--primary)] via-blue-500 to-amber-500 rounded-full" />
+            <div className="hidden lg:block absolute top-12 left-0 right-0 h-1.5 bg-gradient-to-r from-[var(--primary)] via-blue-500 to-amber-500 rounded-full" />
 
-            <div className="grid md:grid-cols-6 gap-4 md:gap-2">
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4 lg:gap-2">
               {milestones.map((milestone, index) => {
                 const Icon = milestone.icon;
                 return (
@@ -794,7 +794,7 @@ export default function AboutPage() {
                     <motion.div
                       whileHover={{ scale: 1.3, rotate: 360 }}
                       transition={{ duration: 0.5 }}
-                      className="hidden md:flex mx-auto w-12 h-12 bg-white border-4 border-[var(--primary)] rounded-full items-center justify-center z-10 relative mb-6 shadow-lg"
+                      className="hidden lg:flex mx-auto w-12 h-12 bg-white border-4 border-[var(--primary)] rounded-full items-center justify-center z-10 relative mb-6 shadow-lg"
                     >
                       <Icon className="w-5 h-5 text-[var(--primary)]" />
                     </motion.div>

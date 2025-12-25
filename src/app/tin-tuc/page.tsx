@@ -6,6 +6,7 @@ import Link from "next/link";
 import { Calendar, Clock, ChevronRight, Search, Tag } from "lucide-react";
 import { newsArticles, newsCategories, getFeaturedArticles } from "@/data/news";
 import { cn } from "@/lib/utils";
+import Input from "@/components/common/Input";
 
 const ITEMS_PER_PAGE = 6;
 
@@ -132,19 +133,18 @@ export default function NewsPage() {
         <div className="bg-white rounded-xl shadow-sm p-4 mb-6">
           <div className="flex flex-col md:flex-row gap-4">
             {/* Search */}
-            <div className="relative flex-1">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-[var(--gray-400)]" />
-              <input
-                type="text"
-                placeholder="Tìm kiếm bài viết..."
-                value={searchQuery}
-                onChange={(e) => {
-                  setSearchQuery(e.target.value);
-                  setVisibleCount(ITEMS_PER_PAGE);
-                }}
-                className="w-full pl-10 pr-4 py-2.5 border border-[var(--gray-200)] rounded-lg focus:outline-none focus:border-[var(--primary)] transition-colors"
-              />
-            </div>
+            <Input
+              type="text"
+              placeholder="Tìm kiếm bài viết..."
+              value={searchQuery}
+              onChange={(e) => {
+                setSearchQuery(e.target.value);
+                setVisibleCount(ITEMS_PER_PAGE);
+              }}
+              leftIcon={<Search className="w-5 h-5" />}
+              containerClassName="flex-1"
+              className="!py-2.5 !rounded-lg"
+            />
 
             {/* Categories */}
             <div className="flex flex-wrap gap-2">

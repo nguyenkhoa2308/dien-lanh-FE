@@ -5,6 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useCart } from "@/contexts/cart-context";
 import { formatPrice } from "@/lib/utils";
+import Input from "@/components/common/Input";
 
 interface FormData {
   fullName: string;
@@ -243,86 +244,38 @@ export default function CheckoutPage() {
                   </h2>
 
                   <div className="grid sm:grid-cols-2 gap-4">
-                    <div>
-                      <label
-                        htmlFor="fullName"
-                        className="block text-sm font-medium text-gray-700 mb-1"
-                      >
-                        Họ và tên <span className="text-red-500">*</span>
-                      </label>
-                      <input
-                        type="text"
-                        id="fullName"
-                        name="fullName"
-                        value={formData.fullName}
-                        onChange={handleInputChange}
-                        className={`w-full px-4 py-3 border rounded-xl focus:outline-none focus:ring-2 focus:ring-[var(--primary)] focus:border-transparent transition-all ${
-                          errors.fullName
-                            ? "border-red-500 bg-red-50"
-                            : "border-gray-300"
-                        }`}
-                        placeholder="Nguyễn Văn A"
-                      />
-                      {errors.fullName && (
-                        <p className="mt-1 text-sm text-red-500">
-                          {errors.fullName}
-                        </p>
-                      )}
-                    </div>
+                    <Input
+                      type="text"
+                      name="fullName"
+                      label="Họ và tên"
+                      required
+                      value={formData.fullName}
+                      onChange={handleInputChange}
+                      placeholder="Nguyễn Văn A"
+                      error={errors.fullName}
+                    />
 
-                    <div>
-                      <label
-                        htmlFor="phone"
-                        className="block text-sm font-medium text-gray-700 mb-1"
-                      >
-                        Số điện thoại <span className="text-red-500">*</span>
-                      </label>
-                      <input
-                        type="tel"
-                        id="phone"
-                        name="phone"
-                        value={formData.phone}
-                        onChange={handleInputChange}
-                        className={`w-full px-4 py-3 border rounded-xl focus:outline-none focus:ring-2 focus:ring-[var(--primary)] focus:border-transparent transition-all ${
-                          errors.phone
-                            ? "border-red-500 bg-red-50"
-                            : "border-gray-300"
-                        }`}
-                        placeholder="0912345678"
-                      />
-                      {errors.phone && (
-                        <p className="mt-1 text-sm text-red-500">
-                          {errors.phone}
-                        </p>
-                      )}
-                    </div>
+                    <Input
+                      type="tel"
+                      name="phone"
+                      label="Số điện thoại"
+                      required
+                      value={formData.phone}
+                      onChange={handleInputChange}
+                      placeholder="0912345678"
+                      error={errors.phone}
+                    />
 
-                    <div className="sm:col-span-2">
-                      <label
-                        htmlFor="email"
-                        className="block text-sm font-medium text-gray-700 mb-1"
-                      >
-                        Email
-                      </label>
-                      <input
-                        type="email"
-                        id="email"
-                        name="email"
-                        value={formData.email}
-                        onChange={handleInputChange}
-                        className={`w-full px-4 py-3 border rounded-xl focus:outline-none focus:ring-2 focus:ring-[var(--primary)] focus:border-transparent transition-all ${
-                          errors.email
-                            ? "border-red-500 bg-red-50"
-                            : "border-gray-300"
-                        }`}
-                        placeholder="email@example.com"
-                      />
-                      {errors.email && (
-                        <p className="mt-1 text-sm text-red-500">
-                          {errors.email}
-                        </p>
-                      )}
-                    </div>
+                    <Input
+                      type="email"
+                      name="email"
+                      label="Email"
+                      value={formData.email}
+                      onChange={handleInputChange}
+                      placeholder="email@example.com"
+                      error={errors.email}
+                      containerClassName="sm:col-span-2"
+                    />
                   </div>
                 </div>
 
@@ -336,86 +289,39 @@ export default function CheckoutPage() {
                   </h2>
 
                   <div className="grid sm:grid-cols-2 gap-4">
-                    <div>
-                      <label
-                        htmlFor="city"
-                        className="block text-sm font-medium text-gray-700 mb-1"
-                      >
-                        Tỉnh/Thành phố <span className="text-red-500">*</span>
-                      </label>
-                      <input
-                        type="text"
-                        id="city"
-                        name="city"
-                        value={formData.city}
-                        onChange={handleInputChange}
-                        className={`w-full px-4 py-3 border rounded-xl focus:outline-none focus:ring-2 focus:ring-[var(--primary)] focus:border-transparent transition-all ${
-                          errors.city
-                            ? "border-red-500 bg-red-50"
-                            : "border-gray-300"
-                        }`}
-                        placeholder="TP. Hồ Chí Minh"
-                      />
-                      {errors.city && (
-                        <p className="mt-1 text-sm text-red-500">
-                          {errors.city}
-                        </p>
-                      )}
-                    </div>
+                    <Input
+                      type="text"
+                      name="city"
+                      label="Tỉnh/Thành phố"
+                      required
+                      value={formData.city}
+                      onChange={handleInputChange}
+                      placeholder="TP. Hồ Chí Minh"
+                      error={errors.city}
+                    />
 
-                    <div>
-                      <label
-                        htmlFor="district"
-                        className="block text-sm font-medium text-gray-700 mb-1"
-                      >
-                        Quận/Huyện <span className="text-red-500">*</span>
-                      </label>
-                      <input
-                        type="text"
-                        id="district"
-                        name="district"
-                        value={formData.district}
-                        onChange={handleInputChange}
-                        className={`w-full px-4 py-3 border rounded-xl focus:outline-none focus:ring-2 focus:ring-[var(--primary)] focus:border-transparent transition-all ${
-                          errors.district
-                            ? "border-red-500 bg-red-50"
-                            : "border-gray-300"
-                        }`}
-                        placeholder="Quận 1"
-                      />
-                      {errors.district && (
-                        <p className="mt-1 text-sm text-red-500">
-                          {errors.district}
-                        </p>
-                      )}
-                    </div>
+                    <Input
+                      type="text"
+                      name="district"
+                      label="Quận/Huyện"
+                      required
+                      value={formData.district}
+                      onChange={handleInputChange}
+                      placeholder="Quận 1"
+                      error={errors.district}
+                    />
 
-                    <div className="sm:col-span-2">
-                      <label
-                        htmlFor="address"
-                        className="block text-sm font-medium text-gray-700 mb-1"
-                      >
-                        Địa chỉ chi tiết <span className="text-red-500">*</span>
-                      </label>
-                      <input
-                        type="text"
-                        id="address"
-                        name="address"
-                        value={formData.address}
-                        onChange={handleInputChange}
-                        className={`w-full px-4 py-3 border rounded-xl focus:outline-none focus:ring-2 focus:ring-[var(--primary)] focus:border-transparent transition-all ${
-                          errors.address
-                            ? "border-red-500 bg-red-50"
-                            : "border-gray-300"
-                        }`}
-                        placeholder="Số nhà, tên đường, phường/xã"
-                      />
-                      {errors.address && (
-                        <p className="mt-1 text-sm text-red-500">
-                          {errors.address}
-                        </p>
-                      )}
-                    </div>
+                    <Input
+                      type="text"
+                      name="address"
+                      label="Địa chỉ chi tiết"
+                      required
+                      value={formData.address}
+                      onChange={handleInputChange}
+                      placeholder="Số nhà, tên đường, phường/xã"
+                      error={errors.address}
+                      containerClassName="sm:col-span-2"
+                    />
                   </div>
                 </div>
 

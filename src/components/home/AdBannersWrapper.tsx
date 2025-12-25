@@ -4,7 +4,7 @@ import dynamic from "next/dynamic";
 
 // Dynamic import to prevent hydration mismatch (Swiper needs client-side JS)
 const AdBannersSwiper = dynamic(
-  () => import("@/components/ad-banners-swiper"),
+  () => import("@/components/home/AdBannersSwiper"),
   {
     ssr: false,
     loading: () => (

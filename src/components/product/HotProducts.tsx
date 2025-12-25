@@ -231,8 +231,8 @@ export default function HotProducts({ products }: HotProductsProps) {
       <div className="max-w-7xl mx-auto px-4">
         {/* Unified container - Banner + Products trong cùng 1 khung */}
         <div className="bg-gradient-to-b from-red-600 via-red-600 to-red-700 rounded-xl overflow-hidden shadow-lg">
-          {/* Banner with fixed aspect ratio to prevent layout shift */}
-          <div className="w-full aspect-[6/1] relative bg-red-700">
+          {/* Banner with responsive aspect ratio */}
+          <div className="w-full aspect-[3/1] sm:aspect-[4/1] md:aspect-[5/1] lg:aspect-[6/1] relative bg-red-700">
             <Image
               src="/images/banners/banner.png"
               alt="Khuyến mãi Tết 2025"

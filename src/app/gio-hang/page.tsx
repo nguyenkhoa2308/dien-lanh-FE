@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import QuantitySelector from "@/components/quantity-selector";
+import QuantitySelector from "@/components/common/QuantitySelector";
 import { useCart } from "@/contexts/cart-context";
 import { formatPrice } from "@/lib/utils";
 

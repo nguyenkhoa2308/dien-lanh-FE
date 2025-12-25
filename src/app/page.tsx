@@ -1,9 +1,9 @@
 import { Suspense } from "react";
-import HotProducts from "@/components/hot-products";
-import AdBannersWrapper from "@/components/ad-banners-wrapper";
-import ProductList from "@/components/product-list";
-import ProductCardSkeleton from "@/components/product-card-skeleton";
-import ArticleSection from "@/components/article-section";
+import HotProducts from "@/components/product/HotProducts";
+import AdBannersWrapper from "@/components/home/AdBannersWrapper";
+import ProductList from "@/components/product/ProductList";
+import ProductCardSkeleton from "@/components/product/ProductCardSkeleton";
+import ArticleSection from "@/components/content/ArticleSection";
 import { getFeaturedProducts, getProducts } from "@/lib/api";
 
 // Revalidate data every 60 seconds - prevents loading on client navigation
@@ -24,7 +24,7 @@ export default async function Home() {
         fallback={
           <section id="products" className="py-8">
             <div className="max-w-7xl mx-auto px-4">
-              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3 md:gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-4">
                 {Array.from({ length: 12 }).map((_, i) => (
                   <ProductCardSkeleton key={`skeleton-${i}`} />
                 ))}

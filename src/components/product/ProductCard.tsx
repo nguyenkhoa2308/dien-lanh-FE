@@ -21,8 +21,10 @@ export default function ProductCard({ product }: ProductCardProps) {
     removeItem: removeFromCompare,
     isInCompare,
     isHydrated,
+    items: compareItems,
   } = useCompare();
   const [showNotification, setShowNotification] = useState(false);
+  const [showCompareFullNotification, setShowCompareFullNotification] = useState(false);
   const [isImageLoaded, setIsImageLoaded] = useState(false);
 
   const defaultVariant =
@@ -79,6 +81,12 @@ export default function ProductCard({ product }: ProductCardProps) {
     if (isComparing) {
       removeFromCompare(product.id);
     } else {
+      // Check if compare list is full (max 3 items)
+      if (compareItems.length >= 3) {
+        setShowCompareFullNotification(true);
+        setTimeout(() => setShowCompareFullNotification(false), 3000);
+        return;
+      }
       addToCompare({
         id: product.id,
         name: product.name,
@@ -277,6 +285,29 @@ export default function ProductCard({ product }: ProductCardProps) {
               />
             </svg>
             <span className="text-sm font-medium">Đã thêm!</span>
+          </div>
+        </div>
+      )}
+
+      {/* Compare full notification */}
+      {showCompareFullNotification && (
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-20 bg-amber-500 text-white px-4 py-3 rounded-lg shadow-xl animate-fade-in max-w-[200px]">
+          <div className="flex flex-col items-center gap-1 text-center">
+            <svg
+              className="w-6 h-6"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
+              />
+            </svg>
+            <span className="text-sm font-medium">Đã đủ 3 sản phẩm!</span>
+            <span className="text-xs opacity-90">Xóa bớt để thêm mới</span>
           </div>
         </div>
       )}

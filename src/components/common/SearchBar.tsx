@@ -105,6 +105,8 @@ export default function SearchBar({
     if (query.trim()) {
       saveRecentSearch(query);
       router.push(`/tim-kiem?q=${encodeURIComponent(query.trim())}`);
+      setQuery("");
+      setSuggestions([]);
       setIsOpen(false);
       onClose?.();
     }
@@ -113,15 +115,18 @@ export default function SearchBar({
   // Handle suggestion click
   const handleSuggestionClick = (product: Product) => {
     saveRecentSearch(product.name);
+    setQuery("");
+    setSuggestions([]);
     setIsOpen(false);
     onClose?.();
   };
 
   // Handle popular/recent search click
   const handleQuickSearch = (term: string) => {
-    setQuery(term);
     saveRecentSearch(term);
     router.push(`/tim-kiem?q=${encodeURIComponent(term)}`);
+    setQuery("");
+    setSuggestions([]);
     setIsOpen(false);
     onClose?.();
   };

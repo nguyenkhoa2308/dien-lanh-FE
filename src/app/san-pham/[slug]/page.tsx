@@ -1,11 +1,11 @@
 import Link from 'next/link';
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
-import ProductGallery from '@/components/product-gallery';
-import ProductDetailTabs from '@/components/product-detail-tabs';
-import RelatedProductsSwiper from '@/components/related-products-swiper';
-import PowerSelector from '@/components/power-selector';
-import AddToCartSection from '@/components/add-to-cart-section';
+import ProductGallery from '@/components/product/ProductGallery';
+import ProductDetailTabs from '@/components/product/ProductDetailTabs';
+import RelatedProductsSwiper from '@/components/product/RelatedProductsSwiper';
+import PowerSelector from '@/components/common/PowerSelector';
+import AddToCartSection from '@/components/product/AddToCartSection';
 import { brands, Product } from '@/data/products';
 import { formatNumber, formatPrice } from '@/lib/utils';
 import { getProductBySlug, getProducts, Product as APIProduct } from '@/lib/api';
@@ -312,18 +312,18 @@ export default async function ProductDetailPage({
 
               {/* Title & Rating */}
               <div>
-                <h1 className="text-3xl lg:text-4xl font-bold text-gray-900 leading-tight">
+                <h1 className="text-xl sm:text-2xl lg:text-3xl font-bold text-gray-900 leading-tight">
                   {product.name}
                 </h1>
 
-                <div className="mt-4 flex flex-wrap items-center gap-4">
+                <div className="mt-3 flex flex-wrap items-center gap-2 sm:gap-3">
                   {rating > 0 ? (
-                    <div className="flex items-center gap-2">
+                    <div className="flex items-center gap-1.5">
                       <div className="flex items-center gap-0.5">
                         {[...Array(5)].map((_, index) => (
                           <svg
                             key={index}
-                            className={`w-5 h-5 ${
+                            className={`w-4 h-4 ${
                               index < Math.round(rating)
                                 ? 'text-yellow-400'
                                 : 'text-gray-300'
@@ -335,96 +335,96 @@ export default async function ProductDetailPage({
                           </svg>
                         ))}
                       </div>
-                      <span className="text-sm font-semibold text-gray-700">
+                      <span className="text-xs sm:text-sm font-semibold text-gray-700">
                         {rating.toFixed(1)}
                       </span>
-                      <span className="text-sm text-gray-500">
-                        ({formatNumber(ratingCount)} đánh giá)
+                      <span className="text-xs sm:text-sm text-gray-500">
+                        ({formatNumber(ratingCount)})
                       </span>
                     </div>
                   ) : (
-                    <span className="text-sm text-gray-500">Chưa có đánh giá</span>
+                    <span className="text-xs sm:text-sm text-gray-500">Chưa có đánh giá</span>
                   )}
 
-                  <div className="h-4 w-px bg-gray-300"></div>
+                  <span className="hidden sm:block h-4 w-px bg-gray-300"></span>
 
-                  <span className="text-sm text-gray-600">
-                    SKU: <span className="font-mono font-semibold">{sku}</span>
+                  <span className="text-xs sm:text-sm text-gray-600">
+                    <span className="font-mono font-semibold">{sku}</span>
                   </span>
 
-                  <div className="h-4 w-px bg-gray-300"></div>
+                  <span className="hidden sm:block h-4 w-px bg-gray-300"></span>
 
-                  <span className="text-sm text-gray-600">
-                    Thương hiệu: <span className="font-semibold text-[var(--primary)]">{brandLabel}</span>
+                  <span className="text-xs sm:text-sm font-semibold text-[var(--primary)]">
+                    {brandLabel}
                   </span>
                 </div>
               </div>
 
               {/* Price */}
-              <div className="p-6 bg-gradient-to-br from-orange-50 to-red-50 rounded-2xl border-2 border-red-200 shadow-lg">
-                <div className="flex flex-wrap items-end gap-3">
-                  <div className="text-4xl lg:text-5xl font-black text-red-600">
+              <div className="p-4 sm:p-6 bg-gradient-to-br from-orange-50 to-red-50 rounded-xl sm:rounded-2xl border-2 border-red-200 shadow-lg">
+                <div className="flex flex-wrap items-end gap-2 sm:gap-3">
+                  <div className="text-2xl sm:text-3xl lg:text-4xl font-black text-red-600">
                     {formatPrice(product.price)}
                   </div>
                   {product.originalPrice && (
                     <div className="flex flex-col">
-                      <span className="text-lg text-gray-500 line-through">
+                      <span className="text-sm sm:text-base text-gray-500 line-through">
                         {formatPrice(product.originalPrice)}
                       </span>
-                      <span className="text-sm font-bold text-red-600">
+                      <span className="text-xs sm:text-sm font-bold text-red-600">
                         Tiết kiệm {formatPrice(product.originalPrice - product.price)}
                       </span>
                     </div>
                   )}
                 </div>
 
-                <div className="mt-4 flex flex-wrap gap-2">
-                  <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-white rounded-full text-sm font-medium text-gray-700 shadow-sm">
-                    <svg className="w-4 h-4 text-green-600" fill="currentColor" viewBox="0 0 20 20">
+                <div className="mt-3 flex flex-wrap gap-1.5 sm:gap-2">
+                  <span className="inline-flex items-center gap-1 px-2 sm:px-3 py-1 bg-white rounded-full text-xs sm:text-sm font-medium text-gray-700 shadow-sm">
+                    <svg className="w-3.5 h-3.5 text-green-600" fill="currentColor" viewBox="0 0 20 20">
                       <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                     </svg>
                     Trả góp 0%
                   </span>
-                  <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-white rounded-full text-sm font-medium text-gray-700 shadow-sm">
-                    <svg className="w-4 h-4 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
+                  <span className="inline-flex items-center gap-1 px-2 sm:px-3 py-1 bg-white rounded-full text-xs sm:text-sm font-medium text-gray-700 shadow-sm">
+                    <svg className="w-3.5 h-3.5 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
                       <path d="M8 16.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zM15 16.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0z" />
                       <path d="M3 4a1 1 0 00-1 1v10a1 1 0 001 1h1.05a2.5 2.5 0 014.9 0H10a1 1 0 001-1V5a1 1 0 00-1-1H3zM14 7a1 1 0 00-1 1v6.05A2.5 2.5 0 0115.95 16H17a1 1 0 001-1v-5a1 1 0 00-.293-.707l-2-2A1 1 0 0015 7h-1z" />
                     </svg>
-                    Miễn phí vận chuyển
+                    <span className="hidden sm:inline">Miễn phí vận chuyển</span>
+                    <span className="sm:hidden">Free ship</span>
                   </span>
-                  <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-white rounded-full text-sm font-medium text-gray-700 shadow-sm">
-                    <svg className="w-4 h-4 text-purple-600" fill="currentColor" viewBox="0 0 20 20">
-                      <path fillRule="evenodd" d="M3.707 2.293a1 1 0 00-1.414 1.414l14 14a1 1 0 001.414-1.414l-1.473-1.473A10.014 10.014 0 0019.542 10C18.268 5.943 14.478 3 10 3a9.958 9.958 0 00-4.512 1.074l-1.78-1.781zm4.261 4.26l1.514 1.515a2.003 2.003 0 012.45 2.45l1.514 1.514a4 4 0 00-5.478-5.478z" clipRule="evenodd" />
-                      <path d="M12.454 16.697L9.75 13.992a4 4 0 01-3.742-3.741L2.335 6.578A9.98 9.98 0 00.458 10c1.274 4.057 5.065 7 9.542 7 .847 0 1.669-.105 2.454-.303z" />
+                  <span className="inline-flex items-center gap-1 px-2 sm:px-3 py-1 bg-white rounded-full text-xs sm:text-sm font-medium text-gray-700 shadow-sm">
+                    <svg className="w-3.5 h-3.5 text-purple-600" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                     </svg>
-                    Chính hãng 100%
+                    Chính hãng
                   </span>
                 </div>
               </div>
 
               {/* Specs Grid */}
-              <div className="grid grid-cols-2 gap-4">
-                <div className="p-4 bg-white rounded-xl border border-gray-200 hover:border-[var(--primary)] transition-colors shadow-sm">
-                  <div className="text-xs text-gray-500 mb-1">Công suất</div>
-                  <div className="text-lg font-bold text-gray-900">
+              <div className="grid grid-cols-2 gap-2 sm:gap-3">
+                <div className="p-3 sm:p-4 bg-white rounded-lg sm:rounded-xl border border-gray-200 hover:border-[var(--primary)] transition-colors shadow-sm">
+                  <div className="text-[10px] sm:text-xs text-gray-500 mb-0.5">Công suất</div>
+                  <div className="text-sm sm:text-base font-bold text-gray-900">
                     {product.power} HP
                   </div>
-                  <div className="text-xs text-gray-600">{formatNumber(product.powerBTU)} BTU</div>
+                  <div className="text-[10px] sm:text-xs text-gray-600">{formatNumber(product.powerBTU)} BTU</div>
                 </div>
-                <div className="p-4 bg-white rounded-xl border border-gray-200 hover:border-[var(--primary)] transition-colors shadow-sm">
-                  <div className="text-xs text-gray-500 mb-1">Diện tích</div>
-                  <div className="text-lg font-bold text-gray-900">{roomSize}</div>
-                  <div className="text-xs text-gray-600">Phòng phù hợp</div>
+                <div className="p-3 sm:p-4 bg-white rounded-lg sm:rounded-xl border border-gray-200 hover:border-[var(--primary)] transition-colors shadow-sm">
+                  <div className="text-[10px] sm:text-xs text-gray-500 mb-0.5">Diện tích</div>
+                  <div className="text-sm sm:text-base font-bold text-gray-900">{roomSize}</div>
+                  <div className="text-[10px] sm:text-xs text-gray-600">Phòng phù hợp</div>
                 </div>
-                <div className="p-4 bg-white rounded-xl border border-gray-200 hover:border-[var(--primary)] transition-colors shadow-sm">
-                  <div className="text-xs text-gray-500 mb-1">Công nghệ</div>
-                  <div className="text-lg font-bold text-gray-900">{typeLabel}</div>
-                  <div className="text-xs text-gray-600">Tiết kiệm điện</div>
+                <div className="p-3 sm:p-4 bg-white rounded-lg sm:rounded-xl border border-gray-200 hover:border-[var(--primary)] transition-colors shadow-sm">
+                  <div className="text-[10px] sm:text-xs text-gray-500 mb-0.5">Công nghệ</div>
+                  <div className="text-sm sm:text-base font-bold text-gray-900">{typeLabel}</div>
+                  <div className="text-[10px] sm:text-xs text-gray-600">Tiết kiệm điện</div>
                 </div>
-                <div className="p-4 bg-white rounded-xl border border-gray-200 hover:border-[var(--primary)] transition-colors shadow-sm">
-                  <div className="text-xs text-gray-500 mb-1">Chế độ</div>
-                  <div className="text-lg font-bold text-gray-900">{coolingLabel}</div>
-                  <div className="text-xs text-gray-600">Làm lạnh</div>
+                <div className="p-3 sm:p-4 bg-white rounded-lg sm:rounded-xl border border-gray-200 hover:border-[var(--primary)] transition-colors shadow-sm">
+                  <div className="text-[10px] sm:text-xs text-gray-500 mb-0.5">Chế độ</div>
+                  <div className="text-sm sm:text-base font-bold text-gray-900">{coolingLabel}</div>
+                  <div className="text-[10px] sm:text-xs text-gray-600">Làm lạnh</div>
                 </div>
               </div>
 
@@ -438,25 +438,25 @@ export default async function ProductDetailPage({
               />
 
               {/* Trust Badges */}
-              <div className="grid grid-cols-3 gap-3 p-4 bg-gradient-to-r from-blue-50 to-purple-50 rounded-xl">
+              <div className="grid grid-cols-3 gap-2 p-3 sm:p-4 bg-gradient-to-r from-blue-50 to-purple-50 rounded-lg sm:rounded-xl">
                 <div className="text-center">
-                  <div className="text-2xl font-bold text-[var(--primary)]">24h</div>
-                  <div className="text-xs text-gray-600">Lắp đặt nhanh</div>
+                  <div className="text-lg sm:text-2xl font-bold text-[var(--primary)]">24h</div>
+                  <div className="text-[10px] sm:text-xs text-gray-600">Lắp đặt</div>
                 </div>
                 <div className="text-center border-x border-gray-200">
-                  <div className="text-2xl font-bold text-[var(--success)]">24th</div>
-                  <div className="text-xs text-gray-600">Bảo hành</div>
+                  <div className="text-lg sm:text-2xl font-bold text-[var(--success)]">24th</div>
+                  <div className="text-[10px] sm:text-xs text-gray-600">Bảo hành</div>
                 </div>
                 <div className="text-center">
-                  <div className="text-2xl font-bold text-[var(--accent)]">24/7</div>
-                  <div className="text-xs text-gray-600">Hỗ trợ</div>
+                  <div className="text-lg sm:text-2xl font-bold text-[var(--accent)]">24/7</div>
+                  <div className="text-[10px] sm:text-xs text-gray-600">Hỗ trợ</div>
                 </div>
               </div>
             </div>
           </div>
 
           {/* Product Description & Reviews Tabs */}
-          <div className="mt-12">
+          <div className="mt-8 sm:mt-12">
             <ProductDetailTabs
               productName={product.name}
               typeLabel={typeLabel}
@@ -470,18 +470,18 @@ export default async function ProductDetailPage({
           </div>
 
           {/* Policies Section */}
-          <div className="mt-8 grid md:grid-cols-3 gap-6">
+          <div className="mt-6 sm:mt-8 grid sm:grid-cols-2 md:grid-cols-3 gap-3 sm:gap-4">
             {/* Warranty */}
-            <div className="p-6 bg-gradient-to-br from-green-50 to-emerald-50 rounded-xl border-2 border-green-200">
-              <div className="flex items-center gap-3 mb-4">
-                <div className="w-12 h-12 rounded-full bg-green-500 flex items-center justify-center">
-                  <svg className="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 20 20">
+            <div className="p-4 sm:p-5 bg-gradient-to-br from-green-50 to-emerald-50 rounded-lg sm:rounded-xl border border-green-200">
+              <div className="flex items-center gap-2 sm:gap-3 mb-3">
+                <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-green-500 flex items-center justify-center flex-shrink-0">
+                  <svg className="w-5 h-5 sm:w-6 sm:h-6 text-white" fill="currentColor" viewBox="0 0 20 20">
                     <path fillRule="evenodd" d="M2.166 4.999A11.954 11.954 0 0010 1.944 11.954 11.954 0 0017.834 5c.11.65.166 1.32.166 2.001 0 5.225-3.34 9.67-8 11.317C5.34 16.67 2 12.225 2 7c0-.682.057-1.35.166-2.001zm11.541 3.708a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                   </svg>
                 </div>
-                <h3 className="text-lg font-bold text-gray-900">Bảo hành 24 tháng</h3>
+                <h3 className="text-sm sm:text-base font-bold text-gray-900">Bảo hành 24 tháng</h3>
               </div>
-              <ul className="space-y-2 text-sm text-gray-700">
+              <ul className="space-y-1.5 text-xs sm:text-sm text-gray-700">
                 <li className="flex gap-2">
                   <svg className="w-4 h-4 text-green-600 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
                     <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
@@ -504,30 +504,30 @@ export default async function ProductDetailPage({
             </div>
 
             {/* Installation */}
-            <div className="p-6 bg-gradient-to-br from-blue-50 to-cyan-50 rounded-xl border-2 border-blue-200">
-              <div className="flex items-center gap-3 mb-4">
-                <div className="w-12 h-12 rounded-full bg-blue-500 flex items-center justify-center">
-                  <svg className="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 20 20">
+            <div className="p-4 sm:p-5 bg-gradient-to-br from-blue-50 to-cyan-50 rounded-lg sm:rounded-xl border border-blue-200">
+              <div className="flex items-center gap-2 sm:gap-3 mb-3">
+                <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-blue-500 flex items-center justify-center flex-shrink-0">
+                  <svg className="w-5 h-5 sm:w-6 sm:h-6 text-white" fill="currentColor" viewBox="0 0 20 20">
                     <path fillRule="evenodd" d="M11.3 1.046A1 1 0 0112 2v5h4a1 1 0 01.82 1.573l-7 10A1 1 0 018 18v-5H4a1 1 0 01-.82-1.573l7-10a1 1 0 011.12-.38z" clipRule="evenodd" />
                   </svg>
                 </div>
-                <h3 className="text-lg font-bold text-gray-900">Lắp đặt nhanh</h3>
+                <h3 className="text-sm sm:text-base font-bold text-gray-900">Lắp đặt nhanh</h3>
               </div>
-              <ul className="space-y-2 text-sm text-gray-700">
+              <ul className="space-y-1.5 text-xs sm:text-sm text-gray-700">
                 <li className="flex gap-2">
-                  <svg className="w-4 h-4 text-blue-600 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                  <svg className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-blue-600 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
                     <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                   </svg>
                   Miễn phí lắp đặt nội thành
                 </li>
                 <li className="flex gap-2">
-                  <svg className="w-4 h-4 text-blue-600 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                  <svg className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-blue-600 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
                     <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                   </svg>
                   Kỹ thuật viên chuyên nghiệp
                 </li>
                 <li className="flex gap-2">
-                  <svg className="w-4 h-4 text-blue-600 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                  <svg className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-blue-600 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
                     <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                   </svg>
                   Hẹn lịch linh hoạt trong ngày
@@ -536,31 +536,31 @@ export default async function ProductDetailPage({
             </div>
 
             {/* Shipping */}
-            <div className="p-6 bg-gradient-to-br from-purple-50 to-pink-50 rounded-xl border-2 border-purple-200">
-              <div className="flex items-center gap-3 mb-4">
-                <div className="w-12 h-12 rounded-full bg-purple-500 flex items-center justify-center">
-                  <svg className="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 20 20">
+            <div className="p-4 sm:p-5 bg-gradient-to-br from-purple-50 to-pink-50 rounded-lg sm:rounded-xl border border-purple-200 sm:col-span-2 md:col-span-1">
+              <div className="flex items-center gap-2 sm:gap-3 mb-3">
+                <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-purple-500 flex items-center justify-center flex-shrink-0">
+                  <svg className="w-5 h-5 sm:w-6 sm:h-6 text-white" fill="currentColor" viewBox="0 0 20 20">
                     <path d="M8 16.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zM15 16.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0z" />
                     <path d="M3 4a1 1 0 00-1 1v10a1 1 0 001 1h1.05a2.5 2.5 0 014.9 0H10a1 1 0 001-1V5a1 1 0 00-1-1H3zM14 7a1 1 0 00-1 1v6.05A2.5 2.5 0 0115.95 16H17a1 1 0 001-1v-5a1 1 0 00-.293-.707l-2-2A1 1 0 0015 7h-1z" />
                   </svg>
                 </div>
-                <h3 className="text-lg font-bold text-gray-900">Giao hàng toàn quốc</h3>
+                <h3 className="text-sm sm:text-base font-bold text-gray-900">Giao hàng toàn quốc</h3>
               </div>
-              <ul className="space-y-2 text-sm text-gray-700">
+              <ul className="space-y-1.5 text-xs sm:text-sm text-gray-700">
                 <li className="flex gap-2">
-                  <svg className="w-4 h-4 text-purple-600 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                  <svg className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-purple-600 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
                     <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                   </svg>
                   Giao hàng trong 2-4 giờ nội thành
                 </li>
                 <li className="flex gap-2">
-                  <svg className="w-4 h-4 text-purple-600 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                  <svg className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-purple-600 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
                     <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                   </svg>
                   Kiểm tra hàng trước khi nhận
                 </li>
                 <li className="flex gap-2">
-                  <svg className="w-4 h-4 text-purple-600 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                  <svg className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-purple-600 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
                     <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                   </svg>
                   Đóng gói cẩn thận, chuyên nghiệp
@@ -571,7 +571,7 @@ export default async function ProductDetailPage({
 
           {/* Related Products */}
           {relatedProducts.length > 0 && (
-            <div className="mt-12">
+            <div className="mt-8 sm:mt-12">
               <RelatedProductsSwiper products={relatedProducts} />
             </div>
           )}

@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { useCart } from "@/contexts/cart-context";
-import QuantitySelector from "@/components/quantity-selector";
+import QuantitySelector from "@/components/common/QuantitySelector";
 
 interface AddToCartSectionProps {
   productId: string;
@@ -65,22 +65,22 @@ export default function AddToCartSection({
   };
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-3 sm:space-y-4">
       {/* Quantity selector */}
-      <div className="flex items-center gap-4">
-        <span className="text-sm font-medium text-gray-700">Số lượng:</span>
+      <div className="flex items-center gap-3">
+        <span className="text-xs sm:text-sm font-medium text-gray-700">Số lượng:</span>
         <QuantitySelector value={quantity} onChange={setQuantity} size="lg" />
       </div>
 
       {/* CTA Buttons */}
-      <div className="flex flex-wrap gap-3">
+      <div className="grid grid-cols-2 sm:flex sm:flex-wrap gap-2 sm:gap-3">
         <button
           type="button"
           onClick={handleBuyNow}
-          className="flex-1 min-w-[200px] px-8 py-4 bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white font-bold rounded-xl shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-200 flex items-center justify-center gap-2"
+          className="col-span-2 sm:flex-1 sm:min-w-[180px] px-4 sm:px-6 py-3 sm:py-4 bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white text-sm sm:text-base font-bold rounded-lg sm:rounded-xl shadow-lg hover:shadow-xl transition-all duration-200 flex items-center justify-center gap-2"
         >
           <svg
-            className="w-5 h-5"
+            className="w-4 h-4 sm:w-5 sm:h-5"
             fill="none"
             viewBox="0 0 24 24"
             stroke="currentColor"
@@ -98,10 +98,10 @@ export default function AddToCartSection({
         <button
           type="button"
           onClick={handleAddToCart}
-          className="px-8 py-4 bg-white border-2 border-[var(--primary)] text-[var(--primary)] font-bold rounded-xl hover:bg-[var(--primary)] hover:text-white transition-all duration-200 flex items-center justify-center gap-2 shadow-sm hover:shadow-lg"
+          className="px-4 sm:px-6 py-3 sm:py-4 bg-white border-2 border-[var(--primary)] text-[var(--primary)] text-sm sm:text-base font-bold rounded-lg sm:rounded-xl hover:bg-[var(--primary)] hover:text-white transition-all duration-200 flex items-center justify-center gap-1.5 sm:gap-2 shadow-sm hover:shadow-lg"
         >
           <svg
-            className="w-5 h-5"
+            className="w-4 h-4 sm:w-5 sm:h-5"
             fill="none"
             viewBox="0 0 24 24"
             stroke="currentColor"
@@ -113,15 +113,16 @@ export default function AddToCartSection({
               d="M12 6v6m0 0v6m0-6h6m-6 0H6"
             />
           </svg>
-          Thêm vào giỏ
+          <span className="hidden sm:inline">Thêm vào giỏ</span>
+          <span className="sm:hidden">Giỏ hàng</span>
         </button>
 
         <Link
           href="/lien-he"
-          className="px-8 py-4 bg-gray-100 border-2 border-gray-200 text-gray-700 font-bold rounded-xl hover:bg-gray-200 transition-all duration-200 flex items-center justify-center gap-2"
+          className="px-4 sm:px-6 py-3 sm:py-4 bg-gray-100 border-2 border-gray-200 text-gray-700 text-sm sm:text-base font-bold rounded-lg sm:rounded-xl hover:bg-gray-200 transition-all duration-200 flex items-center justify-center gap-1.5 sm:gap-2"
         >
           <svg
-            className="w-5 h-5"
+            className="w-4 h-4 sm:w-5 sm:h-5"
             fill="none"
             viewBox="0 0 24 24"
             stroke="currentColor"

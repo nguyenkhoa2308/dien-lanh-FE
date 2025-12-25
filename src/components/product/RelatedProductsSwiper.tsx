@@ -4,7 +4,7 @@ import { useRef, useState } from 'react';
 import Link from 'next/link';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import type { Swiper as SwiperType } from 'swiper';
-import ProductCard from '@/components/product-card';
+import ProductCard from '@/components/product/ProductCard';
 import type { Product } from '@/lib/api';
 import 'swiper/css';
 

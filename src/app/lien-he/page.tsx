@@ -1,6 +1,8 @@
 "use client";
 
 import { useState } from "react";
+import Input from "@/components/common/Input";
+import Select from "@/components/common/Select";
 
 const contactInfo = [
   {
@@ -113,7 +115,7 @@ export default function ContactPage() {
     name: "",
     phone: "",
     email: "",
-    subject: "",
+    subject: "tuvan",
     message: "",
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -238,75 +240,58 @@ export default function ContactPage() {
 
               <form onSubmit={handleSubmit} className="space-y-5">
                 <div className="grid md:grid-cols-2 gap-5">
-                  <div>
-                    <label className="block text-sm font-medium text-[var(--gray-700)] mb-2">
-                      Họ và tên <span className="text-[var(--danger)]">*</span>
-                    </label>
-                    <input
-                      type="text"
-                      required
-                      value={formData.name}
-                      onChange={(e) =>
-                        setFormData({ ...formData, name: e.target.value })
-                      }
-                      className="w-full px-4 py-3 bg-[var(--gray-50)] border border-[var(--gray-200)] rounded-xl focus:outline-none focus:border-[var(--primary)] focus:ring-2 focus:ring-[var(--primary)]/20 transition-all"
-                      placeholder="Nhập họ và tên"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-[var(--gray-700)] mb-2">
-                      Số điện thoại{" "}
-                      <span className="text-[var(--danger)]">*</span>
-                    </label>
-                    <input
-                      type="tel"
-                      required
-                      value={formData.phone}
-                      onChange={(e) =>
-                        setFormData({ ...formData, phone: e.target.value })
-                      }
-                      className="w-full px-4 py-3 bg-[var(--gray-50)] border border-[var(--gray-200)] rounded-xl focus:outline-none focus:border-[var(--primary)] focus:ring-2 focus:ring-[var(--primary)]/20 transition-all"
-                      placeholder="Nhập số điện thoại"
-                    />
-                  </div>
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium text-[var(--gray-700)] mb-2">
-                    Email
-                  </label>
-                  <input
-                    type="email"
-                    value={formData.email}
+                  <Input
+                    type="text"
+                    name="name"
+                    label="Họ và tên"
+                    required
+                    value={formData.name}
                     onChange={(e) =>
-                      setFormData({ ...formData, email: e.target.value })
+                      setFormData({ ...formData, name: e.target.value })
                     }
-                    className="w-full px-4 py-3 bg-[var(--gray-50)] border border-[var(--gray-200)] rounded-xl focus:outline-none focus:border-[var(--primary)] focus:ring-2 focus:ring-[var(--primary)]/20 transition-all"
-                    placeholder="Nhập email"
+                    placeholder="Nhập họ và tên"
+                  />
+                  <Input
+                    type="tel"
+                    name="phone"
+                    label="Số điện thoại"
+                    required
+                    value={formData.phone}
+                    onChange={(e) =>
+                      setFormData({ ...formData, phone: e.target.value })
+                    }
+                    placeholder="Nhập số điện thoại"
                   />
                 </div>
 
-                <div>
-                  <label className="block text-sm font-medium text-[var(--gray-700)] mb-2">
-                    Chủ đề
-                  </label>
-                  <select
-                    title="Chọn chủ đề"
-                    value={formData.subject}
-                    onChange={(e) =>
-                      setFormData({ ...formData, subject: e.target.value })
-                    }
-                    className="w-full px-4 py-3 bg-[var(--gray-50)] border border-[var(--gray-200)] rounded-xl focus:outline-none focus:border-[var(--primary)] focus:ring-2 focus:ring-[var(--primary)]/20 transition-all"
-                  >
-                    <option value="">Chọn chủ đề</option>
-                    <option value="tuvan">Tư vấn mua hàng</option>
-                    <option value="baogia">Yêu cầu báo giá</option>
-                    <option value="baohanh">Bảo hành - Sửa chữa</option>
-                    <option value="khieunai">Khiếu nại - Góp ý</option>
-                    <option value="hopTac">Hợp tác kinh doanh</option>
-                    <option value="khac">Khác</option>
-                  </select>
-                </div>
+                <Input
+                  type="email"
+                  name="email"
+                  label="Email"
+                  value={formData.email}
+                  onChange={(e) =>
+                    setFormData({ ...formData, email: e.target.value })
+                  }
+                  placeholder="Nhập email"
+                />
+
+                <Select
+                  name="subject"
+                  label="Chủ đề"
+                  value={formData.subject}
+                  onChange={(e) =>
+                    setFormData({ ...formData, subject: e.target.value })
+                  }
+                  placeholder="Chọn chủ đề"
+                  options={[
+                    { value: "tuvan", label: "Tư vấn mua hàng" },
+                    { value: "baogia", label: "Yêu cầu báo giá" },
+                    { value: "baohanh", label: "Bảo hành - Sửa chữa" },
+                    { value: "khieunai", label: "Khiếu nại - Góp ý" },
+                    { value: "hopTac", label: "Hợp tác kinh doanh" },
+                    { value: "khac", label: "Khác" },
+                  ]}
+                />
 
                 <div>
                   <label className="block text-sm font-medium text-[var(--gray-700)] mb-2">

@@ -5,7 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useCart } from "@/contexts/cart-context";
-import SearchBar from "@/components/search-bar";
+import SearchBar from "@/components/common/SearchBar";
 
 const navigation = [
   { name: "Trang chủ", href: "/" },

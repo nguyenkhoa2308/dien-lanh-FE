@@ -5,9 +5,10 @@ import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { Search, Filter, X, SlidersHorizontal } from "lucide-react";
 import { searchProducts, Product, calculateDiscount } from "@/lib/api";
-import ProductCard from "@/components/product-card";
-import ProductCardSkeleton from "@/components/product-card-skeleton";
-import SearchBar from "@/components/search-bar";
+import ProductCard from "@/components/product/ProductCard";
+import ProductCardSkeleton from "@/components/product/ProductCardSkeleton";
+import SearchBar from "@/components/common/SearchBar";
+import Select from "@/components/common/Select";
 import { brands, priceRanges, powerOptions } from "@/data/products";
 import { cn, parsePriceRange } from "@/lib/utils";
 
@@ -281,18 +282,19 @@ function SearchContent() {
               <span className="text-sm text-[var(--gray-500)] hidden sm:block">
                 Sắp xếp:
               </span>
-              <select
+              <Select
                 value={sortBy}
                 onChange={(e) => setSortBy(e.target.value)}
                 aria-label="Sắp xếp sản phẩm"
-                className="px-3 py-2 bg-[var(--gray-50)] border border-[var(--gray-200)] rounded-lg text-sm focus:outline-none focus:border-[var(--primary)]"
-              >
-                <option value="relevant">Liên quan nhất</option>
-                <option value="price-asc">Giá thấp → cao</option>
-                <option value="price-desc">Giá cao → thấp</option>
-                <option value="discount">Giảm giá nhiều</option>
-                <option value="name-asc">Tên A-Z</option>
-              </select>
+                className="!py-2 !rounded-lg text-sm"
+                options={[
+                  { value: "relevant", label: "Liên quan nhất" },
+                  { value: "price-asc", label: "Giá thấp → cao" },
+                  { value: "price-desc", label: "Giá cao → thấp" },
+                  { value: "discount", label: "Giảm giá nhiều" },
+                  { value: "name-asc", label: "Tên A-Z" },
+                ]}
+              />
             </div>
           </div>
 
@@ -484,14 +486,14 @@ function SearchContent() {
           {/* Results */}
           <main className="flex-1 min-w-0">
             {isLoading ? (
-              <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 gap-3 md:gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-4">
                 {Array.from({ length: 9 }).map((_, i) => (
                   <ProductCardSkeleton key={i} />
                 ))}
               </div>
             ) : filteredProducts.length > 0 ? (
               <>
-                <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 gap-3 md:gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-4">
                   {visibleProducts.map((product) => (
                     <ProductCard key={product.id} product={product} />
                   ))}
@@ -618,7 +620,7 @@ export default function SearchPage() {
               </aside>
               {/* Products grid skeleton */}
               <main className="flex-1 min-w-0">
-                <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 gap-3 md:gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-4">
                   {Array.from({ length: 9 }).map((_, i) => (
                     <ProductCardSkeleton key={i} />
                   ))}
