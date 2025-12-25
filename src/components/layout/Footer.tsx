@@ -13,7 +13,7 @@ export default function Footer() {
               <div className="w-12 h-12 bg-white rounded-xl flex items-center justify-center shadow overflow-hidden">
                 <Image
                   src="/images/logos/logo.png"
-                  alt="Hùng Thanh Logo"
+                  alt="Hùng Thành Logo"
                   width={40}
                   height={40}
                   className="object-contain"
@@ -172,7 +172,7 @@ export default function Footer() {
                   />
                 </svg>
                 <span className="text-gray-400">
-                  Nam Từ Liêm, Hà Nội
+                  29 Hoàng Hoa Thám, Võ Cường, Bắc Ninh
                 </span>
               </li>
               <li className="flex items-center gap-2">
@@ -261,7 +261,7 @@ export default function Footer() {
       <div className="border-t border-gray-700">
         <div className="max-w-7xl mx-auto px-4 py-4">
           <p className="text-center text-xs text-gray-500">
-            &copy; 2025 Hùng Thanh. Tất cả quyền được bảo lưu.
+            &copy; 2025 Hùng Thành. Tất cả quyền được bảo lưu.
           </p>
         </div>
       </div>

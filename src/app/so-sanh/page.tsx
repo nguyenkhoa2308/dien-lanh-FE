@@ -29,6 +29,29 @@ interface DisplayProduct {
   fullData?: Product;
 }
 
+// Mobile spec row component - defined outside to prevent re-creation on each render
+function MobileSpecRow({ label, values }: { label: string; values: (string | null)[] }) {
+  const cols = values.length;
+  return (
+    <div className="border-b border-gray-100 py-3">
+      <div className="text-sm font-semibold text-gray-700 mb-2">{label}</div>
+      <div className={`grid gap-2 ${cols === 2 ? "grid-cols-2" : cols === 3 ? "grid-cols-3" : "grid-cols-2"}`}>
+        {values.map((value, idx) => (
+          <div key={idx} className="text-xs text-gray-600 text-center bg-gray-50 rounded-lg py-2 px-1">
+            {value || "-"}
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+// Format price helper
+function formatPrice(price: string | number): string {
+  const num = typeof price === "string" ? parseFloat(price) : price;
+  return new Intl.NumberFormat("vi-VN").format(num) + "đ";
+}
+
 export default function ComparePage() {
   const { items, removeItem, clearAll, isHydrated } = useCompare();
   const [products, setProducts] = useState<DisplayProduct[]>([]);
@@ -188,11 +211,6 @@ export default function ComparePage() {
     return result;
   };
 
-  // Format price
-  const formatPrice = (price: string | number): string => {
-    const num = typeof price === "string" ? parseFloat(price) : price;
-    return new Intl.NumberFormat("vi-VN").format(num) + "đ";
-  };
 
   // Get discount percentage
   const getDiscount = (product: DisplayProduct): number | null => {
@@ -242,16 +260,16 @@ export default function ComparePage() {
   // Loading state
   if (!isHydrated || loading) {
     return (
-      <div className="min-h-screen bg-gray-50 py-8">
+      <div className="min-h-screen bg-gray-100 py-4 md:py-8">
         <div className="max-w-7xl mx-auto px-4">
           <div className="animate-pulse">
-            <div className="h-8 bg-gray-200 rounded w-48 mb-8" />
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+            <div className="h-8 bg-gray-200 rounded-xl w-48 mb-6" />
+            <div className="grid grid-cols-2 lg:grid-cols-3 gap-4">
               {[1, 2, 3].map((i) => (
-                <div key={i} className="bg-white rounded-xl p-4">
-                  <div className="aspect-square bg-gray-200 rounded-lg mb-4" />
+                <div key={i} className="bg-white rounded-2xl p-4 shadow-sm">
+                  <div className="aspect-square bg-gray-200 rounded-xl mb-4" />
                   <div className="h-4 bg-gray-200 rounded w-3/4 mb-2" />
-                  <div className="h-4 bg-gray-200 rounded w-1/2" />
+                  <div className="h-5 bg-gray-200 rounded w-1/2" />
                 </div>
               ))}
             </div>
@@ -264,12 +282,12 @@ export default function ComparePage() {
   // Empty state
   if (items.length === 0) {
     return (
-      <div className="min-h-screen bg-gray-50 py-8">
+      <div className="min-h-screen bg-gray-100 py-8 md:py-16">
         <div className="max-w-7xl mx-auto px-4">
-          <div className="text-center py-16">
-            <div className="w-24 h-24 mx-auto mb-6 bg-gray-100 rounded-full flex items-center justify-center">
+          <div className="text-center py-12 md:py-24 bg-white rounded-2xl shadow-lg mx-auto max-w-lg">
+            <div className="w-20 h-20 md:w-28 md:h-28 mx-auto mb-6 bg-gray-100 rounded-full flex items-center justify-center">
               <svg
-                className="w-12 h-12 text-gray-400"
+                className="w-10 h-10 md:w-14 md:h-14 text-gray-400"
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"
@@ -282,28 +300,18 @@ export default function ComparePage() {
                 />
               </svg>
             </div>
-            <h1 className="text-2xl font-bold text-gray-900 mb-2">
-              Chưa có sản phẩm để so sánh
+            <h1 className="text-xl md:text-2xl font-bold text-gray-900 mb-2">
+              Chưa có sản phẩm so sánh
             </h1>
-            <p className="text-gray-500 mb-6">
-              Hãy thêm sản phẩm vào danh sách so sánh để xem sự khác biệt
+            <p className="text-gray-500 mb-6 px-4">
+              Thêm sản phẩm vào danh sách để xem sự khác biệt
             </p>
             <Link
               href="/#products"
-              className="inline-flex items-center gap-2 px-6 py-3 bg-[#1976d2] text-white font-semibold rounded-xl hover:bg-[#1565c0] transition-colors"
+              className="inline-flex items-center gap-2 px-6 py-3 bg-[#1976d2] text-white font-semibold rounded-xl hover:bg-[#1565c0] transition-colors shadow-lg"
             >
-              <svg
-                className="w-5 h-5"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M10 19l-7-7m0 0l7-7m-7 7h18"
-                />
+              <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
               </svg>
               Xem sản phẩm
             </Link>
@@ -316,12 +324,12 @@ export default function ComparePage() {
   // Need at least 2 products
   if (items.length < 2) {
     return (
-      <div className="min-h-screen bg-gray-50 py-8">
+      <div className="min-h-screen bg-gray-100 py-8 md:py-16">
         <div className="max-w-7xl mx-auto px-4">
-          <div className="text-center py-16">
-            <div className="w-24 h-24 mx-auto mb-6 bg-yellow-100 rounded-full flex items-center justify-center">
+          <div className="text-center py-12 md:py-24 bg-white rounded-2xl shadow-lg mx-auto max-w-lg">
+            <div className="w-20 h-20 md:w-28 md:h-28 mx-auto mb-6 bg-yellow-100 rounded-full flex items-center justify-center">
               <svg
-                className="w-12 h-12 text-yellow-500"
+                className="w-10 h-10 md:w-14 md:h-14 text-yellow-500"
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"
@@ -334,28 +342,18 @@ export default function ComparePage() {
                 />
               </svg>
             </div>
-            <h1 className="text-2xl font-bold text-gray-900 mb-2">
-              Cần thêm sản phẩm để so sánh
+            <h1 className="text-xl md:text-2xl font-bold text-gray-900 mb-2">
+              Cần thêm sản phẩm
             </h1>
-            <p className="text-gray-500 mb-6">
-              Bạn cần ít nhất 2 sản phẩm để thực hiện so sánh
+            <p className="text-gray-500 mb-6 px-4">
+              Bạn cần ít nhất 2 sản phẩm để so sánh
             </p>
             <Link
               href="/#products"
-              className="inline-flex items-center gap-2 px-6 py-3 bg-[#1976d2] text-white font-semibold rounded-xl hover:bg-[#1565c0] transition-colors"
+              className="inline-flex items-center gap-2 px-6 py-3 bg-[#1976d2] text-white font-semibold rounded-xl hover:bg-[#1565c0] transition-colors shadow-lg"
             >
-              <svg
-                className="w-5 h-5"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M12 6v6m0 0v6m0-6h6m-6 0H6"
-                />
+              <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
               </svg>
               Thêm sản phẩm
             </Link>
@@ -369,237 +367,348 @@ export default function ComparePage() {
   const hasFullData = validProducts.some((p) => p?.fullData);
   const totalSpecs = specGroups.reduce((sum, g) => sum + g.specs.length, 0);
 
-  // Calculate column widths
-  const labelColWidth = 120; // px for spec labels column
-  const productColWidth = 180; // px per product column
-  const tableMinWidth = labelColWidth + productColWidth * validProducts.length;
-
   return (
-    <div className="min-h-screen bg-gray-100 py-4 md:py-6">
-      <div className="max-w-6xl mx-auto px-4">
+    <div className="min-h-screen bg-gray-100 py-4 md:py-6 lg:py-8">
+      <div className="max-w-7xl mx-auto px-4">
         {/* Header */}
-        <div className="flex items-center justify-between mb-4">
+        <div className="flex items-center justify-between mb-4 md:mb-6">
           <div className="flex items-center gap-3">
             <Link
               href="/#products"
-              className="w-9 h-9 flex items-center justify-center rounded-full bg-white shadow-sm hover:bg-gray-50 transition-colors"
+              className="w-9 h-9 md:w-10 md:h-10 flex items-center justify-center rounded-full bg-white shadow-sm hover:bg-gray-50 transition-colors"
             >
               <svg className="w-5 h-5 text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
               </svg>
             </Link>
             <div>
-              <h1 className="text-lg md:text-xl font-bold text-gray-900">So sánh sản phẩm</h1>
-              <p className="text-xs text-gray-500">{items.length} sản phẩm</p>
+              <h1 className="text-lg md:text-xl lg:text-2xl font-bold text-gray-900">So sánh</h1>
+              <p className="text-xs md:text-sm text-gray-500">{items.length} sản phẩm</p>
             </div>
           </div>
           <div className="flex items-center gap-2">
             <button
               type="button"
               onClick={() => setShowClearConfirm(true)}
-              className="text-xs text-gray-500 hover:text-red-500 transition-colors"
+              className="text-xs md:text-sm text-gray-500 hover:text-red-500 transition-colors px-2 py-1"
             >
-              Xóa tất cả
+              Xóa hết
             </button>
             {items.length < 3 && (
               <Link
                 href="/#products"
-                className="flex items-center gap-1 px-3 py-1.5 bg-[#1976d2] text-white text-xs font-medium rounded-lg hover:bg-[#1565c0] transition-colors"
+                className="flex items-center gap-1 px-3 py-2 bg-[#1976d2] text-white text-xs md:text-sm font-medium rounded-lg hover:bg-[#1565c0] transition-colors"
               >
-                <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v12m6-6H6" />
                 </svg>
-                Thêm
+                <span className="hidden md:inline">Thêm</span>
               </Link>
             )}
           </div>
         </div>
 
-        {/* Compare Table - Unified design */}
-        <div className="bg-white rounded-xl shadow-sm overflow-hidden">
-          <div className="overflow-x-auto">
-            <table className="w-full table-fixed" style={{ minWidth: `${tableMinWidth}px` }}>
-              <colgroup>
-                <col style={{ width: `${labelColWidth}px` }} />
-                {validProducts.map((product) => (
-                  <col key={product.id} style={{ width: `${productColWidth}px` }} />
-                ))}
-              </colgroup>
+        {/* ===== MOBILE LAYOUT (< 768px) ===== */}
+        <div className="lg:hidden">
+          {/* Products - Horizontal scroll */}
+          <div className="mb-4 -mx-4 px-4">
+            <div className="flex gap-3 overflow-x-auto pb-2 scrollbar-hide">
+              {validProducts.map((product) => (
+                <div key={product.id} className="relative bg-white rounded-2xl p-4 shadow-sm flex-shrink-0 w-[160px] md:w-[200px]">
+                  <button
+                    type="button"
+                    onClick={() => setItemToRemove({ id: product.id, name: product.name })}
+                    className="absolute top-2 right-2 w-7 h-7 bg-gray-100 text-gray-400 rounded-full flex items-center justify-center hover:bg-red-500 hover:text-white transition-colors z-10"
+                    title="Xóa"
+                  >
+                    <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                  </button>
+                  <Link href={`/san-pham/${product.slug}`} className="block">
+                    <div className="relative aspect-square mb-3 bg-gray-50 rounded-xl overflow-hidden">
+                      <Image
+                        src={getImageUrl(product)}
+                        alt={product.name}
+                        fill
+                        className="object-contain p-2"
+                        sizes="160px"
+                      />
+                      {getDiscount(product) && (
+                        <span className="absolute top-1 left-1 px-1.5 py-0.5 bg-red-500 text-white text-[10px] font-bold rounded">
+                          -{getDiscount(product)}%
+                        </span>
+                      )}
+                    </div>
+                    <h3 className="text-xs font-medium text-gray-800 line-clamp-2 mb-2 min-h-[2rem]">
+                      {product.name}
+                    </h3>
+                  </Link>
+                  <div className="text-sm font-bold text-red-600">
+                    {formatPrice(getDisplayPrice(product))}
+                  </div>
+                  {getCompareAtPrice(product) && (
+                    <div className="text-xs text-gray-400 line-through">
+                      {formatPrice(getCompareAtPrice(product)!)}
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
+          </div>
 
-              {/* Product Header Row */}
-              <thead>
-                <tr className="border-b-2 border-gray-100">
-                  <th className="p-3 bg-gray-50 sticky left-0 z-10">
-                    <span className="sr-only">Thông số</span>
-                  </th>
+          {/* Specs comparison */}
+          <div className="bg-white rounded-2xl shadow-sm p-4">
+            {/* Brand */}
+            <MobileSpecRow
+              label="Thương hiệu"
+              values={validProducts.map(p => p.fullData?.brand?.name || p.brand || null)}
+            />
+
+            {/* Category */}
+            {hasFullData && (
+              <MobileSpecRow
+                label="Danh mục"
+                values={validProducts.map(p => p.fullData?.category?.name || null)}
+              />
+            )}
+
+            {/* Grouped specs */}
+            {specGroups.map((group) => {
+              const isCollapsed = collapsedGroups.has(group.groupName);
+              return (
+                <div key={`mobile-group-${group.groupName}`} className="mt-4">
+                  {/* Group header */}
+                  <button
+                    type="button"
+                    onClick={() => toggleGroup(group.groupName)}
+                    className="w-full flex items-center justify-between py-3 text-left"
+                  >
+                    <span className="text-base font-bold text-[#1976d2]">{group.groupName}</span>
+                    <div className="flex items-center gap-2">
+                      <span className="text-xs text-gray-400 bg-gray-100 px-2 py-0.5 rounded-full">{group.specs.length}</span>
+                      <svg
+                        className={`w-4 h-4 text-gray-400 transition-transform ${isCollapsed ? "" : "rotate-180"}`}
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                      >
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                      </svg>
+                    </div>
+                  </button>
+
+                  {/* Specs in group */}
+                  {!isCollapsed && (
+                    <div className="border-t border-gray-100 pt-2">
+                      {group.specs.map((spec) => (
+                        <MobileSpecRow key={spec.name} label={spec.name} values={spec.values} />
+                      ))}
+                    </div>
+                  )}
+                </div>
+              );
+            })}
+
+            {/* No specs message */}
+            {totalSpecs === 0 && !hasFullData && (
+              <div className="py-8 text-center text-gray-400">
+                <svg className="w-8 h-8 mx-auto mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                <span className="text-sm">Không có thông số</span>
+              </div>
+            )}
+          </div>
+        </div>
+
+        {/* ===== DESKTOP LAYOUT (>= 1024px) ===== */}
+        <div className="hidden lg:block">
+          <div className="bg-white rounded-2xl shadow-lg overflow-hidden">
+            <div className="overflow-x-auto">
+              <table className="w-full">
+                <colgroup>
+                  <col className="w-[220px]" />
                   {validProducts.map((product) => (
-                    <th key={product.id} className="p-3 text-center align-top">
-                      <div className="relative">
-                        {/* Remove button */}
-                        <button
-                          type="button"
-                          onClick={() => setItemToRemove({ id: product.id, name: product.name })}
-                          className="absolute -top-1 -right-1 w-6 h-6 bg-gray-100 text-gray-400 rounded-full flex items-center justify-center hover:bg-red-500 hover:text-white transition-colors z-10"
-                          title="Xóa"
-                        >
-                          <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                          </svg>
-                        </button>
+                    <col key={product.id} className="w-[300px]" />
+                  ))}
+                </colgroup>
 
-                        {/* Product image */}
-                        <Link href={`/san-pham/${product.slug}`} className="block">
-                          <div className="relative w-24 h-24 mx-auto mb-2 bg-gray-50 rounded-lg overflow-hidden">
-                            <Image
-                              src={getImageUrl(product)}
-                              alt={product.name}
-                              fill
-                              className="object-contain p-2"
-                              sizes="96px"
-                            />
-                            {getDiscount(product) && (
-                              <span className="absolute top-1 left-1 px-1.5 py-0.5 bg-red-500 text-white text-[10px] font-bold rounded">
-                                -{getDiscount(product)}%
-                              </span>
-                            )}
-                          </div>
-                        </Link>
-
-                        {/* Product name */}
-                        <Link
-                          href={`/san-pham/${product.slug}`}
-                          className="block text-xs font-medium text-gray-800 hover:text-[#1976d2] line-clamp-2 mb-2 transition-colors h-8"
-                        >
-                          {product.name}
-                        </Link>
-
-                        {/* Price */}
-                        <div className="text-sm font-bold text-red-600">
-                          {formatPrice(getDisplayPrice(product))}
-                        </div>
-                        {getCompareAtPrice(product) && (
-                          <div className="text-xs text-gray-400 line-through">
-                            {formatPrice(getCompareAtPrice(product)!)}
-                          </div>
-                        )}
-
-                        {/* CTA button */}
-                        <Link
-                          href={`/san-pham/${product.slug}`}
-                          className="mt-2 inline-block px-4 py-1.5 bg-[#1976d2] text-white text-xs font-medium rounded-lg hover:bg-[#1565c0] transition-colors"
-                        >
-                          Chi tiết
-                        </Link>
-                      </div>
+                {/* Product Header Row */}
+                <thead>
+                  <tr className="border-b-2 border-gray-200">
+                    <th className="p-6 bg-gray-50 sticky left-0 z-10">
+                      <span className="sr-only">Thông số</span>
                     </th>
-                  ))}
-                </tr>
-              </thead>
+                    {validProducts.map((product) => (
+                      <th key={product.id} className="p-6 text-center align-top">
+                        <div className="relative">
+                          {/* Remove button */}
+                          <button
+                            type="button"
+                            onClick={() => setItemToRemove({ id: product.id, name: product.name })}
+                            className="absolute -top-2 -right-2 w-8 h-8 bg-gray-100 text-gray-400 rounded-full flex items-center justify-center hover:bg-red-500 hover:text-white transition-colors z-10 shadow-sm"
+                            title="Xóa"
+                          >
+                            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                            </svg>
+                          </button>
 
-              <tbody>
-                {/* Brand row */}
-                <tr className="border-b border-gray-100 hover:bg-gray-50/50">
-                  <td className="p-3 text-xs font-medium text-gray-600 bg-gray-50 sticky left-0 z-10">
-                    Thương hiệu
-                  </td>
-                  {validProducts.map((product) => (
-                    <td key={product.id} className="p-3 text-center text-xs text-gray-700">
-                      {product.fullData?.brand?.name || product.brand || "-"}
-                    </td>
-                  ))}
-                </tr>
+                          {/* Product image */}
+                          <Link href={`/san-pham/${product.slug}`} className="block">
+                            <div className="relative w-44 h-44 xl:w-52 xl:h-52 mx-auto mb-4 bg-gray-50 rounded-xl overflow-hidden">
+                              <Image
+                                src={getImageUrl(product)}
+                                alt={product.name}
+                                fill
+                                className="object-contain p-3"
+                                sizes="(max-width: 1280px) 176px, 208px"
+                              />
+                              {getDiscount(product) && (
+                                <span className="absolute top-2 left-2 px-2 py-1 bg-red-500 text-white text-xs font-bold rounded-lg">
+                                  -{getDiscount(product)}%
+                                </span>
+                              )}
+                            </div>
+                          </Link>
 
-                {/* Category row */}
-                {hasFullData && (
+                          {/* Product name */}
+                          <Link
+                            href={`/san-pham/${product.slug}`}
+                            className="block text-base font-semibold text-gray-800 hover:text-[#1976d2] line-clamp-2 mb-3 transition-colors min-h-[3rem]"
+                          >
+                            {product.name}
+                          </Link>
+
+                          {/* Price */}
+                          <div className="text-xl font-bold text-red-600">
+                            {formatPrice(getDisplayPrice(product))}
+                          </div>
+                          {getCompareAtPrice(product) && (
+                            <div className="text-sm text-gray-400 line-through">
+                              {formatPrice(getCompareAtPrice(product)!)}
+                            </div>
+                          )}
+
+                          {/* CTA button */}
+                          <Link
+                            href={`/san-pham/${product.slug}`}
+                            className="mt-4 inline-block px-6 py-2.5 bg-[#1976d2] text-white text-sm font-semibold rounded-xl hover:bg-[#1565c0] transition-colors shadow-sm"
+                          >
+                            Xem chi tiết
+                          </Link>
+                        </div>
+                      </th>
+                    ))}
+                  </tr>
+                </thead>
+
+                <tbody>
+                  {/* Brand row */}
                   <tr className="border-b border-gray-100 hover:bg-gray-50/50">
-                    <td className="p-3 text-xs font-medium text-gray-600 bg-gray-50 sticky left-0 z-10">
-                      Danh mục
+                    <td className="p-4 text-sm font-semibold text-gray-700 bg-gray-50 sticky left-0 z-10">
+                      Thương hiệu
                     </td>
                     {validProducts.map((product) => (
-                      <td key={product.id} className="p-3 text-center text-xs text-gray-700">
-                        {product.fullData?.category?.name || "-"}
+                      <td key={product.id} className="p-4 text-center text-sm text-gray-600">
+                        {product.fullData?.brand?.name || product.brand || "-"}
                       </td>
                     ))}
                   </tr>
-                )}
 
-                {/* Grouped specs */}
-                {specGroups.map((group) => {
-                  const isCollapsed = collapsedGroups.has(group.groupName);
-                  return (
-                    <React.Fragment key={`group-${group.groupName}`}>
-                      {/* Group header */}
-                      <tr
-                        className="bg-blue-50 cursor-pointer hover:bg-blue-100/80 transition-colors"
-                        onClick={() => toggleGroup(group.groupName)}
-                      >
-                        <td className="p-2.5 bg-blue-50 sticky left-0 z-10">
-                          <div className="flex items-center gap-2">
-                            <svg
-                              className={`w-4 h-4 text-[#1976d2] transition-transform duration-150 ${isCollapsed ? "" : "rotate-90"}`}
-                              fill="none"
-                              viewBox="0 0 24 24"
-                              stroke="currentColor"
-                            >
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                            </svg>
-                            <span className="text-xs font-semibold text-[#1976d2] whitespace-nowrap">{group.groupName}</span>
-                            <span className="text-[10px] text-gray-500">({group.specs.length})</span>
-                          </div>
+                  {/* Category row */}
+                  {hasFullData && (
+                    <tr className="border-b border-gray-100 hover:bg-gray-50/50">
+                      <td className="p-4 text-sm font-semibold text-gray-700 bg-gray-50 sticky left-0 z-10">
+                        Danh mục
+                      </td>
+                      {validProducts.map((product) => (
+                        <td key={product.id} className="p-4 text-center text-sm text-gray-600">
+                          {product.fullData?.category?.name || "-"}
                         </td>
-                        {validProducts.map((product) => (
-                          <td key={product.id} className="p-2.5 bg-blue-50" />
-                        ))}
-                      </tr>
+                      ))}
+                    </tr>
+                  )}
 
-                      {/* Specs in group */}
-                      {!isCollapsed && group.specs.map((spec, idx) => (
+                  {/* Grouped specs */}
+                  {specGroups.map((group) => {
+                    const isCollapsed = collapsedGroups.has(group.groupName);
+                    return (
+                      <React.Fragment key={`desktop-group-${group.groupName}`}>
+                        {/* Group header */}
                         <tr
-                          key={`${group.groupName}-${spec.name}`}
-                          className={`border-b border-gray-100 hover:bg-gray-50/50 ${idx % 2 === 1 ? "bg-gray-50/30" : ""}`}
+                          className="bg-blue-50 cursor-pointer hover:bg-blue-100/80 transition-colors"
+                          onClick={() => toggleGroup(group.groupName)}
                         >
-                          <td className="p-3 pl-6 text-xs font-medium text-gray-600 bg-gray-50 sticky left-0 z-10 break-words">
-                            {spec.name}
+                          <td className="p-4 bg-blue-50 sticky left-0 z-10">
+                            <div className="flex items-center gap-3">
+                              <svg
+                                className={`w-5 h-5 text-[#1976d2] transition-transform duration-150 ${isCollapsed ? "" : "rotate-90"}`}
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke="currentColor"
+                              >
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                              </svg>
+                              <span className="text-base font-bold text-[#1976d2]">{group.groupName}</span>
+                              <span className="text-xs text-gray-500 bg-white/60 px-2 py-0.5 rounded-full">({group.specs.length})</span>
+                            </div>
                           </td>
-                          {spec.values.map((value, valueIdx) => (
-                            <td
-                              key={validProducts[valueIdx]?.id || valueIdx}
-                              className="p-3 text-center text-xs text-gray-700 break-words"
-                            >
-                              {value || "-"}
-                            </td>
+                          {validProducts.map((product) => (
+                            <td key={product.id} className="p-4 bg-blue-50" />
                           ))}
                         </tr>
-                      ))}
-                    </React.Fragment>
-                  );
-                })}
 
-                {/* No specs message */}
-                {totalSpecs === 0 && !hasFullData && (
-                  <tr>
-                    <td colSpan={validProducts.length + 1} className="p-8 text-center">
-                      <div className="flex flex-col items-center gap-2 text-gray-400">
-                        <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                        </svg>
-                        <span className="text-sm">Không thể tải thông số kỹ thuật</span>
-                      </div>
-                    </td>
-                  </tr>
-                )}
-              </tbody>
-            </table>
+                        {/* Specs in group */}
+                        {!isCollapsed && group.specs.map((spec, idx) => (
+                          <tr
+                            key={`${group.groupName}-${spec.name}`}
+                            className={`border-b border-gray-100 hover:bg-gray-50/50 ${idx % 2 === 1 ? "bg-gray-50/30" : ""}`}
+                          >
+                            <td className="p-4 pl-10 text-sm font-semibold text-gray-700 bg-gray-50 sticky left-0 z-10 break-words">
+                              {spec.name}
+                            </td>
+                            {spec.values.map((value, valueIdx) => (
+                              <td
+                                key={validProducts[valueIdx]?.id || valueIdx}
+                                className="p-4 text-center text-sm text-gray-600 break-words"
+                              >
+                                {value || "-"}
+                              </td>
+                            ))}
+                          </tr>
+                        ))}
+                      </React.Fragment>
+                    );
+                  })}
+
+                  {/* No specs message */}
+                  {totalSpecs === 0 && !hasFullData && (
+                    <tr>
+                      <td colSpan={validProducts.length + 1} className="p-8 text-center">
+                        <div className="flex flex-col items-center gap-2 text-gray-400">
+                          <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                          </svg>
+                          <span className="text-sm">Không thể tải thông số kỹ thuật</span>
+                        </div>
+                      </td>
+                    </tr>
+                  )}
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
 
         {/* Footer */}
-        <div className="mt-4 text-center">
+        <div className="mt-6 text-center">
           <Link
             href="/#products"
-            className="inline-flex items-center gap-2 text-sm text-[#1976d2] hover:underline"
+            className="inline-flex items-center gap-2 px-5 py-2.5 text-sm md:text-base text-[#1976d2] hover:bg-blue-50 rounded-xl transition-colors"
           >
-            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <svg className="w-4 h-4 md:w-5 md:h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
             </svg>
             Tiếp tục xem sản phẩm

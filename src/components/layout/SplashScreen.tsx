@@ -20,7 +20,7 @@ export default function SplashScreen() {
           <div className="w-24 h-24 bg-white rounded-2xl flex items-center justify-center shadow-2xl shadow-black/20 p-3">
             <Image
               src="/images/logos/logo.png"
-              alt="Hùng Thanh Logo"
+              alt="Hùng Thành Logo"
               width={80}
               height={80}
               className="w-full h-full object-contain"
@@ -32,7 +32,7 @@ export default function SplashScreen() {
         {/* Brand name */}
         <div className="text-center">
           <h1 className="text-3xl font-bold text-white">
-            Hùng <span className="text-[#90caf9]">Thanh</span>
+            Hùng <span className="text-[#90caf9]">Thành</span>
           </h1>
           <p className="text-sm text-white/70 uppercase tracking-widest mt-1">
             Mát lạnh tận nhà

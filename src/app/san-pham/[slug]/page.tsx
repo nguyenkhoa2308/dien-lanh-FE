@@ -180,7 +180,7 @@ export async function generateMetadata({
 
   if (!apiProduct) {
     return {
-      title: 'Sản phẩm không tồn tại | Hùng Thanh',
+      title: 'Sản phẩm không tồn tại | Hùng Thành',
       description: 'Sản phẩm bạn tìm kiếm không có trong hệ thống.',
     };
   }
@@ -188,12 +188,12 @@ export async function generateMetadata({
   const product = adaptAPIProduct(apiProduct);
 
   return {
-    title: `${product.name} | Hùng Thanh`,
+    title: `${product.name} | Hùng Thành`,
     description: `${product.name} công suất ${product.power} HP (${formatNumber(
       product.powerBTU
     )} BTU), ${getTypeLabel(product)} ${getCoolingLabel(product)}.`,
     openGraph: {
-      title: `${product.name} | Hùng Thanh`,
+      title: `${product.name} | Hùng Thành`,
       description: `${product.name} chính hãng, giao nhanh, bảo hành 24 tháng.`,
     },
   };

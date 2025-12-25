@@ -90,24 +90,24 @@ const faqs = [
     answer: "Máy lạnh Inverter tiết kiệm điện năng từ 30-50% so với máy lạnh thường nhờ khả năng điều chỉnh công suất linh hoạt. Ngoài ra, máy hoạt động êm ái hơn, làm lạnh nhanh hơn và có tuổi thọ cao hơn do máy nén không phải bật/tắt liên tục."
   },
   {
-    question: "Hùng Thanh có hỗ trợ trả góp không?",
-    answer: "Hùng Thanh hỗ trợ trả góp 0% lãi suất qua các ngân hàng và công ty tài chính uy tín như Home Credit, FE Credit, HD Saison, Kredivo. Thủ tục đơn giản, duyệt nhanh trong 15 phút với CMND/CCCD."
+    question: "Hùng Thành có hỗ trợ trả góp không?",
+    answer: "Hùng Thành hỗ trợ trả góp 0% lãi suất qua các ngân hàng và công ty tài chính uy tín như Home Credit, FE Credit, HD Saison, Kredivo. Thủ tục đơn giản, duyệt nhanh trong 15 phút với CMND/CCCD."
   },
   {
     question: "Thời gian lắp đặt máy lạnh mất bao lâu?",
     answer: "Thời gian lắp đặt tiêu chuẩn từ 2-4 giờ tùy thuộc vào vị trí và độ phức tạp. Đối với các trường hợp đặc biệt (tường gạch cứng, vị trí cao...), thời gian có thể kéo dài hơn. Kỹ thuật viên sẽ thông báo trước khi thi công."
   },
   {
-    question: "Chính sách bảo hành của Hùng Thanh như thế nào?",
-    answer: "Hùng Thanh cung cấp bảo hành chính hãng từ 12-24 tháng tùy sản phẩm, bảo hành máy nén lên đến 5 năm. Ngoài ra, khách hàng được bảo trì miễn phí năm đầu tiên (vệ sinh, kiểm tra gas, kiểm tra điện)."
+    question: "Chính sách bảo hành của Hùng Thành như thế nào?",
+    answer: "Hùng Thành cung cấp bảo hành chính hãng từ 12-24 tháng tùy sản phẩm, bảo hành máy nén lên đến 5 năm. Ngoài ra, khách hàng được bảo trì miễn phí năm đầu tiên (vệ sinh, kiểm tra gas, kiểm tra điện)."
   },
   {
     question: "Làm thế nào để chọn công suất máy lạnh phù hợp?",
-    answer: "Công suất máy lạnh được tính dựa trên diện tích phòng: 1HP cho phòng 9-15m², 1.5HP cho 15-20m², 2HP cho 20-30m². Tuy nhiên, còn phụ thuộc vào hướng nhà, số người sử dụng, thiết bị tỏa nhiệt. Liên hệ Hùng Thanh để được tư vấn chính xác nhất."
+    answer: "Công suất máy lạnh được tính dựa trên diện tích phòng: 1HP cho phòng 9-15m², 1.5HP cho 15-20m², 2HP cho 20-30m². Tuy nhiên, còn phụ thuộc vào hướng nhà, số người sử dụng, thiết bị tỏa nhiệt. Liên hệ Hùng Thành để được tư vấn chính xác nhất."
   },
   {
-    question: "Hùng Thanh có dịch vụ sửa chữa máy lạnh không?",
-    answer: "Hùng Thanh cung cấp dịch vụ sửa chữa, bảo trì máy lạnh tất cả các hãng. Đội ngũ kỹ thuật viên được đào tạo chuyên nghiệp, có chứng chỉ từ các nhà sản xuất. Báo giá minh bạch, bảo hành dịch vụ 3-6 tháng."
+    question: "Hùng Thành có dịch vụ sửa chữa máy lạnh không?",
+    answer: "Hùng Thành cung cấp dịch vụ sửa chữa, bảo trì máy lạnh tất cả các hãng. Đội ngũ kỹ thuật viên được đào tạo chuyên nghiệp, có chứng chỉ từ các nhà sản xuất. Báo giá minh bạch, bảo hành dịch vụ 3-6 tháng."
   },
 ];
 
@@ -123,7 +123,7 @@ const reviews = [
     name: "Trần Thị Hương",
     rating: 5,
     date: "10/12/2024",
-    comment: "Mua máy lạnh cho cả nhà, tổng 4 máy. Được giảm giá tốt, lắp đặt nhanh trong 1 ngày. Rất hài lòng với dịch vụ của Hùng Thanh!",
+    comment: "Mua máy lạnh cho cả nhà, tổng 4 máy. Được giảm giá tốt, lắp đặt nhanh trong 1 ngày. Rất hài lòng với dịch vụ của Hùng Thành!",
     product: "Máy lạnh Panasonic 1HP & 2HP"
   },
   {
@@ -260,7 +260,7 @@ export default function AboutPage() {
                 transition={{ delay: 0.3 }}
                 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight"
               >
-                Hùng Thanh mang đến
+                Hùng Thành mang đến
                 <span className="block text-transparent bg-clip-text bg-gradient-to-r from-amber-400 to-orange-500 mt-2">
                   dịch vụ máy lạnh chuyên nghiệp
                 </span>
@@ -337,7 +337,7 @@ export default function AboutPage() {
                 >
                   <Image
                     src="/images/about/about-story.png"
-                    alt="Hùng Thanh Showroom"
+                    alt="Hùng Thành Showroom"
                     fill
                     className="object-cover"
                     priority
@@ -452,14 +452,14 @@ export default function AboutPage() {
             >
               <span className="inline-flex items-center gap-2 px-4 py-1.5 bg-[var(--primary)]/10 text-[var(--primary)] font-semibold text-sm rounded-full mb-4">
                 <ThumbsUp className="w-4 h-4" />
-                Tại sao chọn Hùng Thanh?
+                Tại sao chọn Hùng Thành?
               </span>
               <h2 className="text-3xl md:text-4xl font-bold text-[var(--gray-900)] mb-6">
                 9 lý do khách hàng{" "}
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-[var(--primary)] to-blue-600">
                   tin tưởng
                 </span>{" "}
-                Hùng Thanh
+                Hùng Thành
               </h2>
               <p className="text-[var(--gray-600)] mb-8 leading-relaxed text-lg">
                 Chúng tôi không chỉ bán máy lạnh, chúng tôi mang đến giải pháp làm mát toàn diện
@@ -627,7 +627,7 @@ export default function AboutPage() {
               Đánh giá từ khách hàng
             </span>
             <h2 className="text-3xl md:text-4xl font-bold text-[var(--gray-900)] mb-4">
-              Khách hàng nói gì về Hùng Thanh?
+              Khách hàng nói gì về Hùng Thành?
             </h2>
             <motion.div
               initial={{ scale: 0.9, opacity: 0 }}
@@ -863,7 +863,7 @@ export default function AboutPage() {
       {/* CTA Section */}
       <section className="relative py-24 overflow-hidden">
         <div className="absolute inset-0">
-          <Image src="/images/about/about-cta.png" alt="Hùng Thanh" fill className="object-cover" />
+          <Image src="/images/about/about-cta.png" alt="Hùng Thành" fill className="object-cover" />
           <div className="absolute inset-0 bg-gradient-to-r from-[#1e3a5f]/95 via-[#0d47a1]/90 to-[#1565c0]/85" />
         </div>
 

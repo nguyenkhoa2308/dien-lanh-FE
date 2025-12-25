@@ -28,7 +28,7 @@ const contactInfo = [
       </svg>
     ),
     title: "Địa chỉ",
-    content: "Nam Từ Liêm, Hà Nội",
+    content: "29 Hoàng Hoa Thám, Võ Cường, Bắc Ninh",
     link: "https://maps.google.com",
     linkText: "Xem bản đồ",
   },
@@ -104,8 +104,8 @@ const contactInfo = [
 
 const branches = [
   {
-    city: "Hà Nội",
-    address: "Nam Từ Liêm, Hà Nội",
+    city: "Bắc Ninh",
+    address: "29 Hoàng Hoa Thám, Võ Cường, Bắc Ninh",
     phone: "0779.886.666",
   },
 ];
@@ -147,7 +147,7 @@ export default function ContactPage() {
             Liên hệ với chúng tôi
           </h1>
           <p className="text-lg text-white/80 max-w-2xl mx-auto">
-            Đội ngũ Hùng Thanh luôn sẵn sàng hỗ trợ và giải đáp mọi thắc mắc của
+            Đội ngũ Hùng Thành luôn sẵn sàng hỗ trợ và giải đáp mọi thắc mắc của
             bạn
           </p>
         </div>

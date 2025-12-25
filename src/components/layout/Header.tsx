@@ -123,7 +123,7 @@ export default function Header() {
             <Link href="/" className="flex items-center gap-3 flex-shrink-0">
               <Image
                 src="/images/logos/logo.png"
-                alt="Hùng Thanh Logo"
+                alt="Hùng Thành Logo"
                 width={56}
                 height={56}
                 className="h-12 md:h-14 w-auto"
@@ -131,7 +131,7 @@ export default function Header() {
               />
               <div className="hidden sm:block">
                 <div className="text-xl font-bold text-[var(--gray-900)]">
-                  Hùng<span className="text-[var(--primary)] ml-1">Thanh</span>
+                  Hùng<span className="text-[var(--primary)] ml-1">Thành</span>
                 </div>
                 <div className="text-[10px] text-[var(--gray-500)] uppercase tracking-wider font-medium">
                   Mát lạnh tận nhà

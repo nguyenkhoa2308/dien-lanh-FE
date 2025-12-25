@@ -23,9 +23,9 @@ const beVietnamPro = Be_Vietnam_Pro({
 });
 
 export const metadata: Metadata = {
-  title: "Hùng Thanh - Máy Lạnh Chính Hãng Giá Tốt Nhất",
+  title: "Hùng Thành - Máy Lạnh Chính Hãng Giá Tốt Nhất",
   description:
-    "Hùng Thanh - Chuyên bán máy lạnh Inverter chính hãng Daikin, Panasonic, LG, Samsung, Toshiba. Giá tốt nhất, trả góp 0%, bảo hành uy tín, lắp đặt tận nơi.",
+    "Hùng Thành - Chuyên bán máy lạnh Inverter chính hãng Daikin, Panasonic, LG, Samsung, Toshiba. Giá tốt nhất, trả góp 0%, bảo hành uy tín, lắp đặt tận nơi.",
   keywords: [
     "máy lạnh",
     "điều hòa",
@@ -41,7 +41,7 @@ export const metadata: Metadata = {
     apple: "/images/logos/logo.png",
   },
   openGraph: {
-    title: "Hùng Thanh - Máy Lạnh Chính Hãng Giá Tốt Nhất",
+    title: "Hùng Thành - Máy Lạnh Chính Hãng Giá Tốt Nhất",
     description:
       "Chuyên bán máy lạnh Inverter chính hãng. Giá tốt nhất, trả góp 0%.",
     type: "website",

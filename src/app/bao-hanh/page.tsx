@@ -1,8 +1,8 @@
 import Link from 'next/link';
 
 export const metadata = {
-  title: 'Bảo hành & Bảo dưỡng - Hùng Thanh',
-  description: 'Chính sách bảo hành và dịch vụ bảo dưỡng máy lạnh tại Hùng Thanh',
+  title: 'Bảo hành & Bảo dưỡng - Hùng Thành',
+  description: 'Chính sách bảo hành và dịch vụ bảo dưỡng máy lạnh tại Hùng Thành',
 };
 
 const warrantyPolicies = [
@@ -117,8 +117,8 @@ const faqs = [
     answer: 'Với các lỗi thông thường, kỹ thuật viên sẽ khắc phục trong ngày. Trường hợp cần thay thế linh kiện đặc biệt, thời gian có thể từ 2-5 ngày tùy tình trạng.',
   },
   {
-    question: 'Hùng Thanh có hỗ trợ bảo hành tại nhà không?',
-    answer: 'Có, Hùng Thanh cung cấp dịch vụ bảo hành tại nhà hoàn toàn miễn phí trong thời gian bảo hành. Khách hàng chỉ cần đặt lịch hẹn qua hotline 0779 886 666.',
+    question: 'Hùng Thành có hỗ trợ bảo hành tại nhà không?',
+    answer: 'Có, Hùng Thành cung cấp dịch vụ bảo hành tại nhà hoàn toàn miễn phí trong thời gian bảo hành. Khách hàng chỉ cần đặt lịch hẹn qua hotline 0779 886 666.',
   },
   {
     question: 'Chi phí di chuyển có tính riêng không?',
@@ -197,7 +197,7 @@ export default function WarrantyPage() {
                 Lưu ý quan trọng
               </h4>
               <ul className="space-y-2 text-sm text-[var(--gray-700)]">
-                <li>• Bảo hành chỉ áp dụng khi sản phẩm được lắp đặt bởi kỹ thuật viên Hùng Thanh hoặc đại lý ủy quyền</li>
+                <li>• Bảo hành chỉ áp dụng khi sản phẩm được lắp đặt bởi kỹ thuật viên Hùng Thành hoặc đại lý ủy quyền</li>
                 <li>• Không áp dụng bảo hành cho các trường hợp hư hỏng do thiên tai, sử dụng sai cách, hoặc tự ý sửa chữa</li>
                 <li>• Vui lòng giữ hóa đơn mua hàng và phiếu bảo hành trong suốt thời gian bảo hành</li>
               </ul>
