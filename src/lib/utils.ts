@@ -59,3 +59,29 @@ export function truncateText(text: string, maxLength: number): string {
   if (text.length <= maxLength) return text;
   return text.slice(0, maxLength) + '...';
 }
+
+/**
+ * Generate consistent fake product stats based on product ID
+ * Uses simple hash to ensure same product always gets same values
+ */
+export function generateProductStats(productId: string): { rating: number; soldCount: number; soldDisplay: string } {
+  // Simple hash function to get consistent number from string
+  let hash = 0;
+  for (let i = 0; i < productId.length; i++) {
+    const char = productId.charCodeAt(i);
+    hash = ((hash << 5) - hash) + char;
+    hash = hash & hash; // Convert to 32bit integer
+  }
+  hash = Math.abs(hash);
+
+  // Generate rating between 4.0 and 5.0 (one decimal place)
+  const rating = 4.0 + ((hash % 11) / 10); // 4.0, 4.1, 4.2, ... 5.0
+
+  // Generate sold count between 0 and 1000
+  const soldCount = (hash >> 4) % 1001; // 0 to 1000
+
+  // Format sold display
+  const soldDisplay = soldCount >= 1000 ? '1k' : soldCount.toString();
+
+  return { rating, soldCount, soldDisplay };
+}
