@@ -17,7 +17,7 @@ import { parsePriceRange, cn, calculateDiscount } from "@/lib/utils";
 import { Product } from "@/lib/api";
 
 const ITEMS_PER_PAGE = 12;
-const LOAD_MORE_DELAY = 150; // Brief delay for load more skeleton
+const LOAD_MORE_DELAY = 500; // Brief delay for load more skeleton
 
 interface Filters {
   brand: string[];
@@ -38,8 +38,6 @@ export default function ProductList({ initialProducts }: ProductListProps) {
   const [showFilters, setShowFilters] = useState(false);
   const [visibleCount, setVisibleCount] = useState(ITEMS_PER_PAGE);
   const [isLoadingMore, setIsLoadingMore] = useState(false);
-
-  // Products are already loaded from SSR - no skeleton needed for initial render
 
   // Track if user has manually changed filters (to override URL params)
   const [manualFilters, setManualFilters] = useState<Filters | null>(null);
@@ -466,7 +464,11 @@ export default function ProductList({ initialProducts }: ProductListProps) {
                           <rect x="2" y="6" width="20" height="12" rx="2" />
                           <path d="M6 10h2M6 14h4" />
                           <path d="M16 9v6" strokeLinecap="round" />
-                          <path d="M14 11l2-2 2 2" strokeLinecap="round" strokeLinejoin="round" />
+                          <path
+                            d="M14 11l2-2 2 2"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                          />
                         </svg>
                         <span
                           className={cn(
