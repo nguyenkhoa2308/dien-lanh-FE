@@ -1,12 +1,13 @@
 "use client";
 
-import { useState, useMemo, useEffect } from "react";
+import { useState, useMemo } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
+import Image from "next/image";
 import {
   brands,
-  powerOptions,
   priceRanges,
   features,
+  popularBrands,
   quickFilters,
   sortOptions,
 } from "@/data/products";
@@ -16,7 +17,7 @@ import { parsePriceRange, cn, calculateDiscount } from "@/lib/utils";
 import { Product } from "@/lib/api";
 
 const ITEMS_PER_PAGE = 12;
-const LOAD_MORE_DELAY = 500; // Simulate loading delay for better UX
+const LOAD_MORE_DELAY = 150; // Brief delay for load more skeleton
 
 interface Filters {
   brand: string[];
@@ -37,15 +38,8 @@ export default function ProductList({ initialProducts }: ProductListProps) {
   const [showFilters, setShowFilters] = useState(false);
   const [visibleCount, setVisibleCount] = useState(ITEMS_PER_PAGE);
   const [isLoadingMore, setIsLoadingMore] = useState(false);
-  const [isInitialLoading, setIsInitialLoading] = useState(true);
 
-  // Show skeleton on initial load, then fade to real products
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setIsInitialLoading(false);
-    }, 800); // Brief skeleton display for smooth UX
-    return () => clearTimeout(timer);
-  }, []);
+  // Products are already loaded from SSR - no skeleton needed for initial render
 
   // Track if user has manually changed filters (to override URL params)
   const [manualFilters, setManualFilters] = useState<Filters | null>(null);
@@ -98,7 +92,9 @@ export default function ProductList({ initialProducts }: ProductListProps) {
 
   // Helper: Check if product has a feature
   const hasFeature = (product: Product, feature: string): boolean => {
-    const searchText = `${product.name} ${product.shortDescription || ""}`.toLowerCase();
+    const searchText = `${product.name} ${
+      product.shortDescription || ""
+    }`.toLowerCase();
 
     switch (feature) {
       case "inverter":
@@ -345,16 +341,42 @@ export default function ProductList({ initialProducts }: ProductListProps) {
               {/* Quick filters - scrollable on mobile */}
               <div className="flex-1 overflow-x-auto scrollbar-hide">
                 <div className="flex items-center gap-2 pb-1">
+                  {/* Popular brand logos */}
+                  {popularBrands.map((brand) => (
+                    <button
+                      type="button"
+                      key={brand.value}
+                      onClick={() => handleQuickFilter(brand.value)}
+                      className={cn(
+                        "h-8 px-3 rounded-full border transition-all flex items-center justify-center flex-shrink-0 cursor-pointer",
+                        isQuickFilterActive(brand.value)
+                          ? "border-[#1976d2] border-2 bg-blue-50 shadow-sm"
+                          : "border-gray-300 bg-white hover:border-[#1976d2] hover:bg-blue-50/50 hover:shadow-md hover:scale-105"
+                      )}
+                      title={brand.label}
+                    >
+                      <div className="relative w-14 h-5">
+                        <Image
+                          src={brand.image || ""}
+                          alt={brand.label}
+                          fill
+                          className="object-contain"
+                        />
+                      </div>
+                    </button>
+                  ))}
+
+                  {/* Other quick filters (power, price) */}
                   {quickFilters.map((filter) => (
                     <button
                       type="button"
                       key={filter.value}
                       onClick={() => handleQuickFilter(filter.value)}
                       className={cn(
-                        "px-3 py-1.5 rounded-full text-xs sm:text-sm font-medium border transition-colors whitespace-nowrap flex-shrink-0",
+                        "px-3 py-1.5 rounded-full text-xs sm:text-sm font-medium border transition-all whitespace-nowrap flex-shrink-0 cursor-pointer",
                         isQuickFilterActive(filter.value)
-                          ? "bg-[#1976d2] text-white border-[#1976d2]"
-                          : "bg-white text-gray-600 border-gray-300 hover:border-[#1976d2] hover:text-[#1976d2]"
+                          ? "bg-[#1976d2] text-white border-[#1976d2] shadow-sm"
+                          : "bg-white text-gray-600 border-gray-300 hover:border-[#1976d2] hover:text-[#1976d2] hover:bg-blue-50/50 hover:shadow-md hover:scale-105"
                       )}
                     >
                       {filter.label}
@@ -376,25 +398,31 @@ export default function ProductList({ initialProducts }: ProductListProps) {
 
             {/* Expanded filters */}
             {showFilters && (
-              <div className="border-t border-gray-200 pt-4 mt-3 grid grid-cols-1 md:grid-cols-4 gap-4">
+              <div className="border-t border-gray-200 pt-4 mt-3 space-y-6">
                 {/* Brand filter */}
                 <div>
-                  <h4 className="font-medium text-gray-900 mb-2">
-                    Hãng sản xuất
-                  </h4>
-                  <div className="flex flex-wrap gap-2">
+                  <h4 className="font-semibold text-gray-900 mb-3">Hãng</h4>
+                  <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-2">
                     {brands.map((brand) => (
                       <button
                         key={brand.value}
                         onClick={() => toggleArrayFilter("brand", brand.value)}
                         className={cn(
-                          "px-3 py-1 rounded text-sm border transition-colors",
+                          "h-12 px-3 rounded-lg border transition-all flex items-center justify-center bg-white cursor-pointer",
                           filters.brand.includes(brand.value)
-                            ? "bg-[#1976d2] text-white border-[#1976d2]"
-                            : "bg-gray-50 text-gray-700 border-gray-200 hover:border-[#1976d2]"
+                            ? "border-[#1976d2] border-2 shadow-sm"
+                            : "border-gray-200 hover:border-[#1976d2] hover:bg-blue-50/30 hover:shadow-md hover:scale-105"
                         )}
+                        title={brand.label}
                       >
-                        {brand.label}
+                        <div className="relative w-full h-7">
+                          <Image
+                            src={brand.image || ""}
+                            alt={brand.label}
+                            fill
+                            className="object-contain"
+                          />
+                        </div>
                       </button>
                     ))}
                   </div>
@@ -402,72 +430,116 @@ export default function ProductList({ initialProducts }: ProductListProps) {
 
                 {/* Power filter */}
                 <div>
-                  <h4 className="font-medium text-gray-900 mb-2">Công suất</h4>
-                  <div className="flex flex-wrap gap-2">
-                    {powerOptions.map((power) => (
+                  <h4 className="font-semibold text-gray-900 mb-3">
+                    Công suất làm lạnh
+                  </h4>
+                  <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-5 gap-2">
+                    {[
+                      { value: "1", label: "1 HP", room: "Phòng 15m²" },
+                      { value: "1.5", label: "1.5 HP", room: "15 - 20m²" },
+                      { value: "2", label: "2 HP", room: "20 - 30m²" },
+                      { value: "2.5", label: "2.5 HP", room: "30 - 40m²" },
+                    ].map((power) => (
                       <button
                         key={power.value}
                         onClick={() => toggleArrayFilter("power", power.value)}
                         className={cn(
-                          "px-3 py-1 rounded text-sm border transition-colors",
+                          "p-3 rounded-lg border transition-all flex flex-col items-center gap-1 bg-white cursor-pointer group",
                           filters.power.includes(power.value)
-                            ? "bg-[#1976d2] text-white border-[#1976d2]"
-                            : "bg-gray-50 text-gray-700 border-gray-200 hover:border-[#1976d2]"
+                            ? "border-[#1976d2] border-2 shadow-sm"
+                            : "border-gray-200 hover:border-[#1976d2] hover:bg-blue-50/30 hover:shadow-md hover:scale-[1.02]"
                         )}
                       >
-                        {power.label}
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          strokeWidth="1.5"
+                          className={cn(
+                            "w-8 h-8 transition-colors",
+                            filters.power.includes(power.value)
+                              ? "text-[#1976d2]"
+                              : "text-gray-400 group-hover:text-[#1976d2]"
+                          )}
+                        >
+                          <rect x="2" y="6" width="20" height="12" rx="2" />
+                          <path d="M6 10h2M6 14h4" />
+                          <path d="M16 9v6" strokeLinecap="round" />
+                          <path d="M14 11l2-2 2 2" strokeLinecap="round" strokeLinejoin="round" />
+                        </svg>
+                        <span
+                          className={cn(
+                            "text-sm font-semibold transition-colors",
+                            filters.power.includes(power.value)
+                              ? "text-[#1976d2]"
+                              : "text-gray-700 group-hover:text-[#1976d2]"
+                          )}
+                        >
+                          {power.label}
+                        </span>
+                        <span className="text-xs text-gray-500">
+                          {power.room}
+                        </span>
                       </button>
                     ))}
                   </div>
                 </div>
 
-                {/* Price filter */}
-                <div>
-                  <h4 className="font-medium text-gray-900 mb-2">Mức giá</h4>
-                  <div className="flex flex-wrap gap-2">
-                    {priceRanges.map((range) => (
-                      <button
-                        key={range.value}
-                        onClick={() =>
-                          setFilters((prev) => ({
-                            ...prev,
-                            price:
-                              prev.price === range.value ? "" : range.value,
-                          }))
-                        }
-                        className={cn(
-                          "px-3 py-1 rounded text-sm border transition-colors",
-                          filters.price === range.value
-                            ? "bg-[#1976d2] text-white border-[#1976d2]"
-                            : "bg-gray-50 text-gray-700 border-gray-200 hover:border-[#1976d2]"
-                        )}
-                      >
-                        {range.label}
-                      </button>
-                    ))}
+                {/* Price and Features in row */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  {/* Price filter */}
+                  <div>
+                    <h4 className="font-semibold text-gray-900 mb-3">
+                      Mức giá
+                    </h4>
+                    <div className="flex flex-wrap gap-2">
+                      {priceRanges.map((range) => (
+                        <button
+                          key={range.value}
+                          onClick={() =>
+                            setFilters((prev) => ({
+                              ...prev,
+                              price:
+                                prev.price === range.value ? "" : range.value,
+                            }))
+                          }
+                          className={cn(
+                            "px-4 py-2 rounded-lg border text-sm transition-all bg-white cursor-pointer",
+                            filters.price === range.value
+                              ? "border-[#1976d2] border-2 text-[#1976d2] font-medium shadow-sm"
+                              : "border-gray-200 text-gray-700 hover:border-[#1976d2] hover:text-[#1976d2] hover:bg-blue-50/30 hover:shadow-md"
+                          )}
+                        >
+                          {range.label}
+                        </button>
+                      ))}
+                    </div>
                   </div>
-                </div>
 
-                {/* Features filter */}
-                <div>
-                  <h4 className="font-medium text-gray-900 mb-2">Tiện ích</h4>
-                  <div className="flex flex-wrap gap-2">
-                    {features.map((feature) => (
-                      <button
-                        key={feature.value}
-                        onClick={() =>
-                          toggleArrayFilter("features", feature.value)
-                        }
-                        className={cn(
-                          "px-3 py-1 rounded text-sm border transition-colors",
-                          filters.features.includes(feature.value)
-                            ? "bg-[#1976d2] text-white border-[#1976d2]"
-                            : "bg-gray-50 text-gray-700 border-gray-200 hover:border-[#1976d2]"
-                        )}
-                      >
-                        {feature.label}
-                      </button>
-                    ))}
+                  {/* Features filter */}
+                  <div>
+                    <h4 className="font-semibold text-gray-900 mb-3">
+                      Tiện ích
+                    </h4>
+                    <div className="flex flex-wrap gap-2">
+                      {features.map((feature) => (
+                        <button
+                          key={feature.value}
+                          onClick={() =>
+                            toggleArrayFilter("features", feature.value)
+                          }
+                          className={cn(
+                            "px-4 py-2 rounded-lg border text-sm transition-all bg-white cursor-pointer",
+                            filters.features.includes(feature.value)
+                              ? "border-[#1976d2] border-2 text-[#1976d2] font-medium shadow-sm"
+                              : "border-gray-200 text-gray-700 hover:border-[#1976d2] hover:text-[#1976d2] hover:bg-blue-50/30 hover:shadow-md"
+                          )}
+                        >
+                          {feature.label}
+                        </button>
+                      ))}
+                    </div>
                   </div>
                 </div>
               </div>
@@ -476,7 +548,9 @@ export default function ProductList({ initialProducts }: ProductListProps) {
             {/* Sort */}
             <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between border-t border-gray-200 pt-3 mt-3 gap-2">
               <div className="flex items-center gap-2">
-                <span className="text-sm text-gray-600 whitespace-nowrap">Sắp xếp:</span>
+                <span className="text-sm text-gray-600 whitespace-nowrap">
+                  Sắp xếp:
+                </span>
                 <div className="flex flex-wrap gap-1">
                   {sortOptions.map((option) => (
                     <button
@@ -498,14 +572,7 @@ export default function ProductList({ initialProducts }: ProductListProps) {
           </div>
 
           {/* Products grid */}
-          {isInitialLoading ? (
-            /* Skeleton grid on initial load */
-            <div className="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-4">
-              {Array.from({ length: ITEMS_PER_PAGE }).map((_, i) => (
-                <ProductCardSkeleton key={`initial-skeleton-${i}`} />
-              ))}
-            </div>
-          ) : visibleProducts.length > 0 ? (
+          {visibleProducts.length > 0 ? (
             <>
               <div className="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-4">
                 {visibleProducts.map((product) => (
@@ -514,7 +581,12 @@ export default function ProductList({ initialProducts }: ProductListProps) {
                 {/* Skeleton loading when loading more */}
                 {isLoadingMore && (
                   <>
-                    {Array.from({ length: Math.min(ITEMS_PER_PAGE, filteredProducts.length - visibleCount) }).map((_, i) => (
+                    {Array.from({
+                      length: Math.min(
+                        ITEMS_PER_PAGE,
+                        filteredProducts.length - visibleCount
+                      ),
+                    }).map((_, i) => (
                       <ProductCardSkeleton key={`skeleton-${i}`} />
                     ))}
                   </>

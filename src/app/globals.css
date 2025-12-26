@@ -77,7 +77,6 @@ body.splash-hidden::before {
 
 /* Base Styles */
 html {
-  scroll-behavior: smooth;
   /* Account for sticky header when scrolling to anchors */
   scroll-padding-top: 80px;
   /* Prevent layout shift when scrollbar appears/disappears (e.g., modal open) */

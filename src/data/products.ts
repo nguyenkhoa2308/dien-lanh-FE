@@ -23,20 +23,47 @@ export interface Product {
 export interface FilterOption {
   label: string;
   value: string;
+  image?: string;
 }
 
+// All brands for expanded filter (all available brand images)
 export const brands: FilterOption[] = [
-  { label: 'Panasonic', value: 'panasonic' },
-  { label: 'Daikin', value: 'daikin' },
-  { label: 'LG', value: 'lg' },
-  { label: 'Samsung', value: 'samsung' },
-  { label: 'Sharp', value: 'sharp' },
-  { label: 'Toshiba', value: 'toshiba' },
-  { label: 'Casper', value: 'casper' },
-  { label: 'Aqua', value: 'aqua' },
-  { label: 'Nagakawa', value: 'nagakawa' },
-  { label: 'Comfee', value: 'comfee' },
-  { label: 'Midea', value: 'midea' },
+  { label: 'Daikin', value: 'daikin', image: '/images/brands/daikin.png' },
+  { label: 'Panasonic', value: 'panasonic', image: '/images/brands/panasonic.png' },
+  { label: 'LG', value: 'lg', image: '/images/brands/lg.png' },
+  { label: 'Samsung', value: 'samsung', image: '/images/brands/samsung.png' },
+  { label: 'Sharp', value: 'sharp', image: '/images/brands/sharp.png' },
+  { label: 'Toshiba', value: 'toshiba', image: '/images/brands/toshiba.png' },
+  { label: 'Casper', value: 'casper', image: '/images/brands/casper.png' },
+  { label: 'Aqua', value: 'aqua', image: '/images/brands/aqua.png' },
+  { label: 'Nagakawa', value: 'nagakawa', image: '/images/brands/nagakawa.png' },
+  { label: 'Comfee', value: 'comfee', image: '/images/brands/comfee.png' },
+  { label: 'Midea', value: 'midea', image: '/images/brands/midea.png' },
+  { label: 'Funiki', value: 'funiki', image: '/images/brands/funiki.png' },
+  { label: 'TCL', value: 'tcl', image: '/images/brands/tcl.png' },
+  { label: 'Gree', value: 'gree', image: '/images/brands/gree.png' },
+  { label: 'Sunhouse', value: 'sunhouse', image: '/images/brands/sunhouse.png' },
+  { label: 'Hisense', value: 'hisense', image: '/images/brands/hisense.png' },
+];
+
+// All available brand logos for swiper
+export const allBrandLogos: FilterOption[] = [
+  { label: 'Panasonic', value: 'panasonic', image: '/images/brands/panasonic.png' },
+  { label: 'Daikin', value: 'daikin', image: '/images/brands/daikin.png' },
+  { label: 'LG', value: 'lg', image: '/images/brands/lg.png' },
+  { label: 'Samsung', value: 'samsung', image: '/images/brands/samsung.png' },
+  { label: 'Sharp', value: 'sharp', image: '/images/brands/sharp.png' },
+  { label: 'Toshiba', value: 'toshiba', image: '/images/brands/toshiba.png' },
+  { label: 'Casper', value: 'casper', image: '/images/brands/casper.png' },
+  { label: 'Aqua', value: 'aqua', image: '/images/brands/aqua.png' },
+  { label: 'Nagakawa', value: 'nagakawa', image: '/images/brands/nagakawa.png' },
+  { label: 'Comfee', value: 'comfee', image: '/images/brands/comfee.png' },
+  { label: 'Midea', value: 'midea', image: '/images/brands/midea.png' },
+  { label: 'TCL', value: 'tcl', image: '/images/brands/tcl.png' },
+  { label: 'Gree', value: 'gree', image: '/images/brands/gree.png' },
+  { label: 'Funiki', value: 'funiki', image: '/images/brands/funiki.png' },
+  { label: 'Sunhouse', value: 'sunhouse', image: '/images/brands/sunhouse.png' },
+  { label: 'Hisense', value: 'hisense', image: '/images/brands/hisense.png' },
 ];
 
 export const powerOptions: FilterOption[] = [
@@ -63,13 +90,19 @@ export const features: FilterOption[] = [
   { label: 'Điều khiển WiFi', value: 'wifi' },
 ];
 
+// Popular brands for quick filter bar (with logos) - Top 4 only
+export const popularBrands: FilterOption[] = [
+  { label: 'Daikin', value: 'brand:daikin', image: '/images/brands/daikin.png' },
+  { label: 'Panasonic', value: 'brand:panasonic', image: '/images/brands/panasonic.png' },
+  { label: 'LG', value: 'brand:lg', image: '/images/brands/lg.png' },
+  { label: 'Casper', value: 'brand:casper', image: '/images/brands/casper.png' },
+];
+
+// Non-brand quick filters (power, price)
 export const quickFilters: FilterOption[] = [
-  { label: 'Panasonic', value: 'brand:panasonic' },
-  { label: 'LG', value: 'brand:lg' },
-  { label: 'Daikin', value: 'brand:daikin' },
   { label: 'Máy 1 HP', value: 'power:1' },
   { label: 'Máy 1.5 HP', value: 'power:1.5' },
-  { label: '7 - 10 triệu', value: 'price:7000000-10000000' },
+  { label: 'Dưới 7 triệu', value: 'price:0-7000000' },
 ];
 
 export const sortOptions: FilterOption[] = [

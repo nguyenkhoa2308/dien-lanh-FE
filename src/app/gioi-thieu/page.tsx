@@ -4,6 +4,7 @@ import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
+import BrandSwiper from "@/components/common/BrandSwiper";
 import {
   Shield,
   BadgeCheck,
@@ -73,15 +74,6 @@ const milestones = [
   { year: "2020", title: "Số hóa", desc: "Ra mắt website và app đặt hàng", icon: Zap },
   { year: "2022", title: "Toàn quốc", desc: "Phủ sóng 20+ chi nhánh", icon: MapPin },
   { year: "2024", title: "Vươn xa", desc: "Hơn 50,000 khách hàng tin dùng", icon: Rocket },
-];
-
-const partners = [
-  { name: "Daikin", logo: "/images/brands/daikin.png" },
-  { name: "Panasonic", logo: "/images/brands/panasonic.png" },
-  { name: "LG", logo: "/images/brands/lg.png" },
-  { name: "Samsung", logo: "/images/brands/samsung.png" },
-  { name: "Toshiba", logo: "/images/brands/toshiba.png" },
-  { name: "Mitsubishi", logo: "/images/brands/mitsubishi.png" },
 ];
 
 const faqs = [
@@ -823,13 +815,13 @@ export default function AboutPage() {
       </section>
 
       {/* Partners Section */}
-      <section className="py-16 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-4">
+      <section className="py-16 bg-gray-50 overflow-hidden">
+        <div className="max-w-7xl mx-auto px-4 mb-10">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="text-center mb-12"
+            className="text-center"
           >
             <span className="inline-flex items-center gap-2 px-4 py-1.5 bg-[var(--primary)]/10 text-[var(--primary)] font-semibold text-sm rounded-full mb-4">
               <BadgeCheck className="w-4 h-4" />
@@ -839,25 +831,16 @@ export default function AboutPage() {
               Nhà phân phối chính thức của các thương hiệu hàng đầu
             </h2>
           </motion.div>
-
-          <div className="grid grid-cols-3 md:grid-cols-6 gap-4">
-            {partners.map((partner, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, scale: 0.8 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.05 }}
-                whileHover={{ scale: 1.1, y: -5 }}
-                className="flex items-center justify-center p-6 bg-white rounded-2xl grayscale hover:grayscale-0 hover:shadow-xl transition-all duration-300 border border-gray-100"
-              >
-                <div className="relative w-24 h-14">
-                  <Image src={partner.logo} alt={partner.name} fill className="object-contain" />
-                </div>
-              </motion.div>
-            ))}
-          </div>
         </div>
+
+        {/* Full width swiper */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+        >
+          <BrandSwiper showGrayscale={true} />
+        </motion.div>
       </section>
 
       {/* CTA Section */}

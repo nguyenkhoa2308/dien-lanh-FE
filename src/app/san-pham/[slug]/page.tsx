@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import Script from 'next/script';
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import ProductGallery from '@/components/product/ProductGallery';
@@ -9,6 +10,7 @@ import AddToCartSection from '@/components/product/AddToCartSection';
 import { brands, Product } from '@/data/products';
 import { formatNumber, formatPrice } from '@/lib/utils';
 import { getProductBySlug, getProducts, Product as APIProduct } from '@/lib/api';
+import { generateProductSchema } from '@/components/seo/JsonLd';
 
 // Force dynamic rendering for this page
 export const dynamic = 'force-dynamic';
@@ -244,8 +246,29 @@ export default async function ProductDetailPage({
       }))
     : [{ src: product.image, alt: product.name }];
 
+  // Generate product schema for SEO
+  const productSchema = generateProductSchema({
+    name: product.name,
+    description: apiProduct.shortDescription || `${product.name} chính hãng, bảo hành 24 tháng`,
+    slug: product.slug,
+    price: product.price,
+    compareAtPrice: product.originalPrice,
+    image: product.image,
+    brand: brandLabel,
+    sku,
+    inStock: true,
+  });
+
   return (
     <div className="pb-20">
+        {/* Product JSON-LD Schema */}
+        <Script
+          id="product-schema"
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(productSchema) }}
+          strategy="afterInteractive"
+        />
+
         {/* Breadcrumb */}
         <div className="bg-white border-b border-gray-100">
           <div className="max-w-7xl mx-auto px-4 py-4">
